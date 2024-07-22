@@ -1,0 +1,66 @@
+h2 {
+    font-weight: bold;
+    background-color: black;
+    color: white;
+}
+
+.ex-1 div{
+    background-color: red;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ex-2 .odds {
+    background-color: pink;
+    font-family: 'Verdana', 'DejaVu Sans', 'sans-serif';
+}
+
+.ex-2 .odds.odds-3 {
+    font-size: 24px;
+}
+
+.ex-2 #div-1 {
+    color: blue;
+    font-size: 36px;
+}
+
+.ex-2 #div-2 {
+    background-color: lightgreen;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.ex-3 .button-1, .button-2 {
+    font-size: 28px;
+    font-family: Helvetica, 'Times New Roman', sans-serif;
+}
+
+.ex-3 .button-1 {
+    background-color: black;
+    color: white;
+}
+
+.ex-3 .button-2 {
+    background-color: yellow;
+}
+
+.ex-4 .img-parent {
+    width: 300px;
+}
+
+.ex-4 .img-parent.img-child-1 {
+    height: auto;
+}
+
+.ex-4 .img-parent.img-child-2 {
+    height: 150px;
+}
+
+.ex-5 .styled p {
+    background-color: yellow;
+    color: red;
+    font-size: 20px;
+    text-align: center;
+}
