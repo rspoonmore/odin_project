@@ -1,0 +1,21 @@
+.extra-bold {
+    font-weight: bolder;
+}
+
+.smaller {
+    font-size: smaller;
+}
+
+#green-button {
+    background-color: green;
+    color: white;
+}
+
+button {
+    font-size: large;
+    background-color: white;
+}
+
+div {
+    font-weight: lighter;
+}
