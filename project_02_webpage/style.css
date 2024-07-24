@@ -1,0 +1,85 @@
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 100vh;
+    margin: 0px;
+}
+
+.top-box {
+    background-color: #1F2937; 
+}
+
+.header {
+    display: flex;
+    align-content: center;
+    min-height: 25px;
+    gap: 16px;
+    padding: 8px;
+    width: 90%;
+    margin: auto;
+}
+
+.header .logo {
+    color: #F9FAF8;
+    font-size: 24px;
+    padding: 8px;
+    margin-right: auto;
+    flex: 0 0 150px;
+}
+
+.header .link {
+    color: #E5E7EB;
+    font-size: 18px;
+    padding: 8px;
+    justify-content: center;
+}
+
+.top-details {
+    display: flex;
+    align-content: center;
+    min-height: 25px;
+    gap: 16px;
+    padding: 8px;
+    width: 85%;
+    margin: auto;
+    justify-content: center;
+}
+
+.top-details .website-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    color: #F9FAF8;
+    padding: 32px;
+    gap: 8px;
+}
+
+.top-details .website-card .title {
+    font-size: 48px;
+    font-weight: bolder;
+}
+
+.top-details .website-card .message {
+    font-size: 18px;
+    color: #E5E7EB;
+}
+
+.top-details .website-card button {
+    border: none;
+    border-radius: 5px;
+    background-color: #3882F6;
+    color: #E5E7EB;
+    width: 100px;
+    flex: 0 0 30px;
+}
+
+.top-details .image-placeholder {
+    flex: 1;
+    background-color: #e5e7eb83;
+    color: #F9FAF8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    margin: 32px;
+    flex: 0 0 250px;
+}
