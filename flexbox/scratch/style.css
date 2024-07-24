@@ -1,0 +1,45 @@
+.flex_container {
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+}
+
+.flex_item {
+    background-color: peachpuff;
+    border: 4px solid brown;
+    height: 100px;
+    flex: 1;
+}
+
+.flex_container .flex_container {
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    flex: 2;
+    background-color: pink;
+}
+
+.flex_container .flex_container .flex_item {
+    background-color: forestgreen;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border: none;
+    margin: 8px;
+    padding: 0px;
+    height: auto;
+    flex: 1;
+    
+}
+
+.flex_container .flex_item .a {
+    /* flex grow shink basis */
+    width: 50px;
+    flex: 1 0 50px;
+}
+
+.flex_container .flex_item .b {
+    /* flex grow shink basis */
+    width: 50px;
+    flex: 1 5 50px;
+}
