@@ -4,8 +4,9 @@ body {
     margin: 0px;
 }
 
-.top-box {
+.top-box, .footer {
     background-color: #1F2937; 
+    padding: 16px 0px;
 }
 
 .header {
@@ -14,7 +15,7 @@ body {
     min-height: 25px;
     gap: 16px;
     padding: 8px;
-    width: 90%;
+    width: 85%;
     margin: auto;
 }
 
@@ -41,7 +42,6 @@ body {
     padding: 8px;
     width: 85%;
     margin: auto;
-    justify-content: center;
 }
 
 .top-details .website-card {
@@ -82,4 +82,126 @@ body {
     padding: 32px;
     margin: 32px;
     flex: 0 0 250px;
+}
+
+.mid-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 25px;
+    gap: 16px;
+    padding: 16px 0px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+.mid-section .info-header {
+    font-size: 36px;
+    font-weight: bolder;
+    color: #1F2937;
+}
+
+.mid-section .card-holder {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.card-holder .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 1 200px;
+}
+
+.card img {
+    border: 2px solid #3882F6;
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+}
+
+.card .caption {
+    color: #1F2937;
+}
+
+.quote-box {
+    background-color: #E5E7EB;
+    padding: 16px 0px;
+}
+
+.quote-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 25px;
+    padding: 16px;
+    gap: 0px;
+    width: 60%;
+    margin: auto;
+    font-size: 36px;
+    color: #1F2937;
+}
+
+.quote-section .quote {
+    text-align: left;
+    font-weight: lighter;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.quote-section .quote-source {
+    text-align: right;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+
+.contact-section {
+    height: 72;
+    padding: 16px 0px;
+    width: 85%;
+    margin: auto;
+    align-content: center;
+}
+
+.contact-section .contact-box {
+    display: flex;
+    max-width: 500px;
+    height: 40px;
+    margin: auto;
+    background-color: #3882F6;
+    color: #F9FAF8;
+    padding: 16px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items:center;
+    gap: 32px;
+}
+
+.contact-box .contact-words {
+
+}
+
+.contact-words .contact-title {
+    font-size: 24px;
+}
+
+.contact-words .contact-details {
+    font-weight: lighter;
+    font-size: 12px;
+}
+
+.contact-box #signup-inverted {
+    background-color: #3882F6;
+    color: #F9FAF8;
+    border: 1px solid #F9FAF8;
+    border-radius: 10px;
+    height: 28px;
+}
+
+.footer {
+    font-size: xx-small;
+    text-align: center;
+    color: #F9FAF8;
 }
