@@ -1,25 +1,6 @@
-const choices = ['Rock', 'Paper', 'Scissors'];
-
 function getComputerChoice() {
     const choice = Math.floor(Math.random() * choices.length);
     return choices[choice];
-};
-
-function getHumanChoice(try_limit = 3) {
-    let awaiting_choice = true;
-    let tries = 1;
-    while(awaiting_choice && tries <= try_limit) {
-        let raw_input = prompt("Select the number of your choice\n0: Rock\n1: Paper\n2: Scissors");
-        tries = tries + 1;
-        let input_int = parseInt(raw_input);
-        if ([0, 1, 2].includes(input_int)) {
-            return choices[input_int];
-        }
-    }
-    if (awaiting_choice) {
-        return "No choice was made in the proper number of tries";
-    }
-    
 };
 
 function decideWinner(computerChoice, playerChoice) {
@@ -35,37 +16,80 @@ function decideWinner(computerChoice, playerChoice) {
     if (computerChoice == "Scissors") {
         return playerChoice == "Rock" ? "player" : "computer";
     }
-}
+};
 
-function playGame(rounds = 3) {
-    let scores = [0, 0];
-    for (let i = 0; i < rounds; i++) {
-        console.log(`Round ${i+1}`)
-        let computerChoice = getComputerChoice();
-        let playerChoice = getHumanChoice();
-        let round_result = `Player chose ${playerChoice} and Computer chose ${computerChoice}. `
-        let winner = decideWinner(computerChoice, playerChoice);
-        switch (winner) {
-            case "player":
-                console.log(round_result + 'Player Wins!');
-                scores[0] += 1;
-                break;
-            case "computer":
-                console.log(round_result + 'Computer Wins!');
-                scores[1] += 1;
-                break;
-            default:
-                console.log(round_result + 'It is a tie!');
-                break;
-        }
+function checkHiddenStatus() {
+    const newGame = gamesPlayed == 0;
+    const resultsClasses = Array.from(resultsSection.classList);
+
+    if (newGame && !resultsClasses.includes('hidden')) {
+        resultsSection.classList.add('hidden');
     }
-    console.log(`${rounds} rounds completed!\nFinal Score:\n\tPlayer: ${scores[0]}\n\tComputer: ${scores[1]}`);
+    else if (!newGame && resultsClasses.includes('hidden')) {
+        resultsSection.classList.remove('hidden');
+    };
+};
+
+
+function resetGame() {
+    score = [0, 0];
+    gamesPlayed = 0;
+    scoreSummary.textContent = "Results:"
+    checkHiddenStatus();
+};
+
+function clickHumanChoice() {
+    const humanChoice = this.id;
+    const computerChoice = getComputerChoice();
+    let round_result = `Player chose ${humanChoice} and Computer chose ${computerChoice}. `
+    const winner = decideWinner(computerChoice, humanChoice);
+    switch (winner) {
+        case "player":
+            round_result += 'Player Wins!';
+            score[0] += 1;
+            break;
+        case "computer":
+            round_result += 'Computer Wins!';
+            score[1] += 1;
+            break;
+        default:
+            round_result += 'It is a tie!';
+            break;
+    }
+    
+    gamesPlayed += 1;
+
+    updateScore();
+    updateSummary(round_result);
+    checkHiddenStatus();
+};
+
+function updateScore() {
+    scoreTitle.textContent = `Player: ${score[0]} Computer: ${score[1]}`;
+};
+
+function updateSummary(roundResult) {
+    scoreSummary.innerHTML += `<br>${roundResult}`;
 }
 
+const choices = ['Rock', 'Paper', 'Scissors'];
 
-function startGame() {
-    requestedRounds = parseInt(prompt("How many rounds would you like to play?"));
-    playGame(rounds = requestedRounds);
-}
+const rockButton = document.querySelector('#Rock');
+const paperButton = document.querySelector('#Paper');
+const scissorsButton = document.querySelector('#Scissors');
+const resetButton = document.querySelector('#reset');
+const resultsSection = document.querySelector('#results-section');
+const scoreTitle = document.querySelector('#score');
+const scoreSummary = document.querySelector('#score-summary');
 
-startGame();
+resetButton.addEventListener('click', resetGame);
+rockButton.addEventListener('click', clickHumanChoice);
+paperButton.addEventListener('click', clickHumanChoice);
+scissorsButton.addEventListener('click', clickHumanChoice);
+
+var gamesPlayed = 0;
+var score = [0, 0];
+
+updateScore();
+checkHiddenStatus();
+

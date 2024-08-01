@@ -2,9 +2,21 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>JavaScript Scratch</title>
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="javascript.js" defer></script>
 </head>
 <body>
-    <script src="javascript.js"></script>
+  <h1>Let's Play Rock Paper Scissors</h1>
+  <div class="playing-box">
+    <button id="Rock">Rock</button>
+    <button id="Paper">Paper</button>
+    <button id="Scissors">Scissors</button>
+  </div>
+  <div class="hidden" id="results-section">
+    <button id="reset">Reset</button>
+    <p id="score">Score: </p>
+    <p id="score-summary">Results: </p>
+  </div>
 </body>
 </html>
