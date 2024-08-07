@@ -1,0 +1,48 @@
+h1 {
+    text-align: center;
+}
+
+.calculator {
+    max-width: 500px;
+    max-height: 750px;
+    margin: auto;
+}
+
+.toprow {
+    display: flex;
+    gap: 5px;
+    margin: 5px;
+    height: 75px;
+}
+
+#screen {
+    background-color: lightblue;
+    flex: 1 1 300px;
+    text-align: end;
+    font-size: 70px;
+}
+
+.numrow {
+    display: flex;
+    align-content: space-between;
+    gap: 5px;
+    margin: 5px;
+}
+
+button {
+    flex: 1 1 50px;
+    height: 75px;
+    font-size: 50px;
+}
+
+#zero {
+    flex: 2 1 105px;
+}
+
+.operation {
+    background-color: orange;
+}
+
+#enter, #clear {
+    background-color: gray;
+}
