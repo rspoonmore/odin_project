@@ -1,0 +1,44 @@
+.ex-1 {
+    display: grid;
+    grid-template-columns: 150px 450px;
+    grid-template-rows: 50px 50px 250px 50px;
+    gap: 15px;
+}
+
+.ex-1 div {
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+p {
+    text-align: left;
+    font-weight: normal;
+}
+
+.ex-1 .header {
+    background-color:darkgreen;
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.ex-1 .sidebar {
+    background-color:navy;
+    grid-area: 2 / 1 / 4 / 2;
+}
+
+.ex-1 .nav {
+    background-color:blue;
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.ex-1 .article {
+    background-color:purple;
+    grid-area: 3 / 2 / 4 / 3;
+}
+
+.ex-1 .footer {
+    background-color:darkgray;
+    grid-area: 4 / 1 / 5 / 3;
+}
