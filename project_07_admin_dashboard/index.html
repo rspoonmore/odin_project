@@ -6,10 +6,244 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+CA:wght@100..400&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Project 7: Admin Dashbaord</title>
 </head>
 <body>
-    <h1>Test Writing</h1>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-div" id="dashboard">
+                <img src="logos/abacus.svg">
+                <p>Dashboard</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/home-account.svg">
+                <p>Home</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/account.svg">
+                <p>Profile</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/message.svg">
+                <p>Messages</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/history.svg">
+                <p>History</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/check-all.svg">
+                <p>Tasks</p>
+            </div>
+            <div class="sidebar-div" id="communities">
+                <img src="logos/account-group.svg">
+                <p>Communities</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/cog.svg">
+                <p>Settings</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/lifebuoy.svg">
+                <p>Support</p>
+            </div>
+            <div class="sidebar-div">
+                <img src="logos/shield-check.svg">
+                <p>Privacy</p>
+            </div>
+        </div>
+        
+        <div class="search-row">
+            <div class="search-bar-section">
+                <img src="logos/magnify.svg">
+                <input id="searchbar">
+            </div>
+            <div class="info">
+                <img src="logos/alarm-bell.svg">
+                <div class="avatar">RS</div>
+                <p>Ryan Spoonmore</p>
+            </div>
+        </div>
+
+        <div class="account-row">
+            <div class="account-info">
+                <div class="avatar">RS</div>
+                <div class="account-greeting">
+                    <div>Hi there,</div>
+                    <div id="greeting">Ryan Spoonmore (@ryan)</div>
+                </div>
+            </div>
+            <div class="post-buttons">
+                <button>New</button>
+                <button>Upload</button>
+                <button>Share</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="projects">
+                <div class="content-title">Your Projects</div>
+                <div class="project-cards">
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">Super Cool Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">Another Cool Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">Super Un-Cool Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">My Favorite Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">My Second Favorite Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">My Least Favorite Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-content">
+                            <div class="p-card-title">My Second Least Favorite Project</div>
+                            <div class="p-card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, tenetur accusamus eum ipsam dolore neque ex pariatur, tempora aspernatur doloribus iusto quod quam, voluptatibus ipsa.</div>
+                        </div>
+                        <div class="p-card-actions">
+                            <img src="logos/star-plus-outline.svg">
+                            <img src="logos/eye-plus-outline.svg">
+                            <img src="logos/share-variant-outline.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="announcements">
+                <div class="content-title">Announcements</div>
+                <div class="announcements-cards">
+                    <div class="a-card">
+                        <div class="a-card-title">Site Maintenance</div>
+                        <div class="a-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, cupiditate?</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">This Guy Quit</div>
+                        <div class="a-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque harum animi amet esse rerum beatae molestias temporibus, minima mollitia ea!</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">Site Down Again</div>
+                        <div class="a-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, cupiditate?</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">Welcome!</div>
+                        <div class="a-card-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore labore consectetur adipisci illum eius ipsa voluptatum id, cum itaque excepturi?</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">This is a test</div>
+                        <div class="a-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod amet reiciendis nobis, magnam laboriosam perferendis recusandae fugit at maiores explicabo quidem ex! Quaerat nihil tempore, quisquam eveniet id beatae magnam? Incidunt illum, blanditiis doloribus aliquam quaerat ducimus dignissimos. Ratione temporibus modi cupiditate rerum provident perspiciatis quibusdam cum doloremque veniam enim.</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">lowercase</div>
+                        <div class="a-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores amet, accusamus nisi omnis corrupti cum harum aperiam ducimus. Distinctio maiores illo, at odit tempora saepe?</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">Hi</div>
+                        <div class="a-card-content">Hello indeed</div>
+                    </div>
+                    <div class="a-card">
+                        <div class="a-card-title">Got enough?</div>
+                        <div class="a-card-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id magni incidunt eligendi nemo voluptatem quo temporibus voluptas dolor fugit obcaecati ut et dolores tempore dolorum at, adipisci atque. Est voluptas architecto, nisi necessitatibus nam a quasi quod doloremque nulla quia harum, perspiciatis aspernatur debitis voluptatibus reprehenderit laborum suscipit facilis? Hic!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending">
+                <div class="content-title">Trending</div>
+                <div class="trending-cards">
+                    <div class="t-card">
+                        <div class="avatar">TS</div>
+                        <div class="t-card-info">
+                            <div class="t-card-account">@tom</div>
+                            <div class="t-card-project">Super Cool Project</div>
+                        </div>
+                    </div>
+                    <div class="t-card">
+                        <div class="avatar">CB</div>
+                        <div class="t-card-info">
+                            <div class="t-card-account">@boo</div>
+                            <div class="t-card-project">My Favorite Project</div>
+                        </div>
+                    </div>
+                    <div class="t-card">
+                        <div class="avatar">JS</div>
+                        <div class="t-card-info">
+                            <div class="t-card-account">@james</div>
+                            <div class="t-card-project">Another Cool Project</div>
+                        </div>
+                    </div>
+                    <div class="t-card">
+                        <div class="avatar">AS</div>
+                        <div class="t-card-info">
+                            <div class="t-card-account">@alison</div>
+                            <div class="t-card-project">Super Cool Project</div>
+                        </div>
+                    </div>
+                    <div class="t-card">
+                        <div class="avatar">BS</div>
+                        <div class="t-card-info">
+                            <div class="t-card-account">@bobby_spoons</div>
+                            <div class="t-card-project">Super Cool Project</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>

@@ -4,6 +4,253 @@ logos from https://pictogrammers.com/library/mdi/
 colors from https://tailwindcss.com/docs/customizing-colors 
 */
 
+:root {
+    --primary-color: #052e16;
+    --secondary-color: #fbbf24;
+    --background-color: #c9c9c9;
+}
+
 body {
     font-family: "Playwrite CA", cursive;
 }
+
+img {
+    max-width: 15px;
+    max-height: 15px;
+}
+
+.avatar {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: 50px 100px 1fr;
+}
+
+.container .sidebar {
+    grid-area: 1 / 1 / 4 / 2;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: var(--primary-color);
+    gap: 10px;
+}
+
+.sidebar .sidebar-div {
+    display: flex;
+    max-height: 50px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.sidebar-div img {
+    flex: 1 1 25px;
+    filter: invert(100%);
+}
+
+.sidebar-div p {
+    flex: 2 1 auto;
+    font-size: 10px;
+    color: white;
+}
+
+#dashboard {
+    margin-bottom: 20px;
+}
+
+#dashboard img {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+#dashboard p {
+    font-size: 14px;
+}
+
+#communities {
+    margin-bottom: 25px;
+}
+
+.search-row {
+    grid-area: 1 / 2 / 2 / 3;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.search-row .search-bar-section {
+    flex: 2 1 75%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0px 5px;
+    max-width: 500px;
+}
+
+#searchbar {
+    background-color: var(--background-color);
+    border-radius: 15px;
+    width: 100%;
+}
+
+.search-row .info {
+    flex: 1 2 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    margin: 0px 10px 0px 15px;
+    font-size: 8px;
+}
+
+.account-row {
+    grid-area: 2 / 2 / 3 / 3;
+    display: flex;
+}
+
+.account-row .account-info {
+    flex: 2 1 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0px 5px;
+    max-width: 500px;
+}
+
+.account-info .avatar {
+    font-size: 20px;
+}
+
+.account-info .account-greeting {
+    display: flex;
+    flex-direction: column;
+    font-size: 8px;
+}
+
+#greeting {
+    font-size: 16px;
+}
+
+.account-row .post-buttons {
+    flex: 1 2 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    margin: 0px 10px 0px 15px;
+}
+
+.account-row button {
+    border-radius: 10%;
+    border: 1px solid var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.content {
+    grid-area: 3 / 2 / 4 / 3;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: var(--background-color);
+    padding: 15px;
+}
+
+.content-title {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.projects {
+    grid-area: 1 / 1 / 3 / 2;
+    margin: 0px 10px;
+}
+
+.projects .project-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 350px);
+    gap: 10px;
+}
+
+.p-card {
+    background-color: white;
+    border-radius: 10px;
+    border-left: 3px solid var(--secondary-color);
+    font-size: 10px;
+    height: 175px;
+    width: 300px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 150px 25px;
+}
+
+.p-card-content {
+    padding: 15px 5px;
+}
+
+.p-card-title {
+    font-size: 14px;
+}
+
+.p-card-actions {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.announcements {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.announcements-cards {
+    background-color: white;
+    border-radius: 10px;
+    font-size: 8px;
+    padding: 5px;
+}
+
+.a-card {
+    border-bottom: 1px solid black;
+}
+
+.a-card:last-of-type {
+    border: none;
+}
+
+
+.a-card-title {
+    font-size: 12px;
+}
+
+.trending {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.trending-cards {
+    background-color: white;
+    border-radius: 10px;
+    font-size: 8px;
+    padding: 5px;
+}
+
+.t-card {
+    border-bottom: 1px solid black;
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+}
+
+.t-card:last-of-type {
+    border: none;
+}
+
+
+
+
