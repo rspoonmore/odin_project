@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+}
+
+#board {
+    display: grid;
+    grid-template: repeat(3, 75px) / repeat(3, 75px);
+    gap: 10px;
+
+    margin: 25px auto;
+    width: 245px;
+    background-color: black;
+}
+
+#board button {
+    width: 75px;
+    height: 75px;
+    background-color: white;
+    border: none;
+    font-size: 25px;
+}
