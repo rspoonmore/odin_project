@@ -1,0 +1,8 @@
+npm init -y
+npm install --save-dev webpack webpack-cli html-webpack-plugin style-loader css-loader webpack-dev-server
+touch webpack.config.js
+mkdir src
+touch src/template.html src/index.js src/style.css
+
+npx webpack
+npx webpack serve
