@@ -1,3 +1,16 @@
-body {
-    background-color: green;
+#content {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+#content .content-block {
+    background-color: lightblue;
+}
+
+#content table {
+    background-color: lightblue;
+    margin: auto;
 }
