@@ -1,0 +1,8 @@
+npm init -y
+npm install --save-dev webpack webpack-cli html-webpack-plugin style-loader css-loader webpack-dev-server webpack-merge
+touch webpack.common.js webpack.dev.js webpack.prod.js
+mkdir src
+touch src/template.html src/index.js src/style.css
+
+npm run build
+npm run dev
