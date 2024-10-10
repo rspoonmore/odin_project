@@ -1,3 +1,13 @@
+button {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#add-category {
+    margin: 10px;
+}
+
 #container {
     margin: 0px 10px;
     padding: 10px;
@@ -8,6 +18,17 @@
     background-color: lightgrey;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px;
+}
+
+.cat-title {
+    display: flex;
+    gap: 10px;
+}
+
+.cat-title div {
+    font-weight: bolder;
+    font-size: 1.5rem;
 }
 
 .category table {
