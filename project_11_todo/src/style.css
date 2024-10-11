@@ -4,6 +4,15 @@ button {
     padding: 5px;
 }
 
+#new-cat-form {
+    display: none;
+    width: 150px;
+}
+
+form * {
+    margin: 5px;
+}
+
 #add-category {
     margin: 10px;
 }
