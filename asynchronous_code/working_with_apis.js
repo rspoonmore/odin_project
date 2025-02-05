@@ -18,10 +18,23 @@ function searchGIFS(searchField) {
     })
 };
 
+
+async function asyncSearch(searchField) {
+    const url = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=${searchField}`;
+    try {
+        const response = await fetch(url, {mode: 'cors'});
+        const searchData = await response.json();
+        img.src = searchData.data.images.original.url;
+        searchBar.value = "";
+    } catch(err) {
+        console.log(err);
+    }
+};
+
 form.addEventListener('submit', event => {
     event.preventDefault();
-    console.log(searchBar.value);
-    searchGIFS(searchBar.value);
+    // searchGIFS(searchBar.value);
+    asyncSearch(searchBar.value);
 });
 
 
