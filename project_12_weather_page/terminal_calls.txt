@@ -1,0 +1,16 @@
+npm init -y
+npm install --save-dev webpack webpack-cli html-webpack-plugin style-loader css-loader webpack-dev-server webpack-merge date-fns
+touch webpack.common.js webpack.dev.js webpack.prod.js
+mkdir src
+touch src/template.html src/index.js src/style.css
+
+* Change scripts in package.json to the following *
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "dev": "webpack serve"
+    },
+
+npm run build
+npm run dev
+    - ctrl + c to quit hosting
