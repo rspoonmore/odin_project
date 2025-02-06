@@ -11,4 +11,19 @@ async function returnSearchData(searchField) {
     }
 };
 
-export {returnSearchData}
+function parseWeatherData(weatherJSON) {
+    let formattedData = {};
+    formattedData['location'] = weatherJSON.resolvedAddress;
+    formattedData['desc'] = weatherJSON.description;
+
+    const today = weatherJSON.days[0];
+    ['datetime', 'temp', 'tempmin', 'tempmax', 'feelslike', 'feelslikemin', 'feelslikemax'].forEach( e => {
+        formattedData[e] = today[e];
+    });
+
+    return formattedData;
+};
+
+export {returnSearchData, parseWeatherData}
+
+

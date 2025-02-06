@@ -1,6 +1,6 @@
 import "./style.css";
-import {updateIMG, readForm, resetForm}from "./html_handler";
-import { returnSearchData } from "./api_handler";
+import {createPage, readForm, resetForm}from "./html_handler";
+import { returnSearchData, parseWeatherData } from "./api_handler";
 
 
 const form = document.querySelector('form');
@@ -8,8 +8,11 @@ const form = document.querySelector('form');
 async function formSubmitted() {
     try {
         const searchField = await readForm();
-        const searchJSON = await returnSearchData();
-        console.log(searchJSON['days']);
+        const searchJSON = await returnSearchData(searchField);
+        const weatherData = parseWeatherData(searchJSON);
+        console.log(weatherData);
+
+        createPage(weatherData);
     }
     catch(err) {
         console.log(err);

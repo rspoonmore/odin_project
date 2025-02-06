@@ -7,3 +7,9 @@ form {
     margin: 25px auto;
     max-width: 500px;
 }
+
+table {
+    text-align: center;
+    margin: auto;
+    min-width: 500px;
+}
