@@ -137,44 +137,48 @@ class LinkedList {
         return
     }
 
-    removeAt(idx) {
+    remove(key) {
         if (this.head == null) {
-            return
+            return false;
         }
         let lastNode = null;
         let currentNode = this.head;
-        let currentIdx = 0;
-        while (currentNode != null && currentIdx < idx) {
+        if(currentNode.key == key) {
+            currentNode = currentNode.next;
+            this.head = currentNode;
+            return true;
+        }
+        while (currentNode != null) {
+            if(currentNode.key == key) {
+                let nextNode = currentNode.next;
+                lastNode.newNext = nextNode;
+                return true;
+            }
             lastNode = currentNode;
             currentNode = currentNode.next;
-            currentIdx += 1;
         }
-        if (currentIdx == idx) {
-            let nextNode = currentNode.next;
-            lastNode.newNext = nextNode;
-        }
-        return
+        return false;
     }
 
     replaceOrAppend(key, value) {
         if (this.head == null) {
             this.append(key, value)
-            return;
+            return false;
         }
         let currentNode = this.head;
         let idx = 0
         while(currentNode != null) {
-            if (currentNode.key == searchKey) {
+            if (currentNode.key == key) {
                 if (currentNode.value != value) {
                     currentNode.value = value
                 }
-                return;
+                return true;
             }
             currentNode = currentNode.next;
             idx += 1;
         }
         this.append(key, value)
-        return;
+        return false;
     }
 
     toString() {

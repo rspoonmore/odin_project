@@ -40,18 +40,25 @@ class HashMap {
     }
 
     set(key, value) {
+        let hashkey = this.hash(key) % this.capacity;
         let matchedLinkedList = this.getLinkedListFromKey(key)
         if (matchedLinkedList == undefined) {
             let newLinkedList = new LinkedList();
             newLinkedList.append(key, value);
             this.buckets[hashkey] = newLinkedList;
             this.currentLoad += (1 / this.capacity);
-            if (this.currentLoad >= this.loadFactor) {
+            if (this.currentLoad > this.loadFactor) {
                 this.expandBuckets();
             }
             return;
         }
-        matchedLinkedList.replaceOrAppend(key, value);
+        let replaced = matchedLinkedList.replaceOrAppend(key, value);
+        if(!replaced) {
+            this.currentLoad += (1 / this.capacity);
+            if (this.currentLoad > this.loadFactor) {
+                this.expandBuckets();
+            }
+        }
     }
 
     get(key) {
@@ -71,36 +78,65 @@ class HashMap {
     }
 
     remove(key) {
-
+        let matchedLinkedList = this.getLinkedListFromKey(key)
+        if (matchedLinkedList == undefined) {
+            return false
+        }
+        let removed = matchedLinkedList.remove(key);
+        if(removed) {
+            this.currentLoad -= (1 / this.capacity)
+        }
     }
 
     length() {
-
+        let currentSize = 0;
+        this.buckets.forEach((linkedList) => {
+            currentSize += linkedList.size;
+        })
+        return currentSize;
     }
 
     clear() {
         this.buckets = new Array(this.capacity);
         this.capacity = this.originalCap;
+        this.currentLoad = 0;
     }
 
     keys() {
-
+        let keyList = [];
+        this.buckets.forEach((linkedList) => {
+            let currentNode = linkedList.head;
+            while(currentNode != null) {
+                keyList.push(currentNode.key);
+                currentNode = currentNode.next;
+            }
+        })
+        return keyList;
     }
 
     values() {
-
+        let valueList = [];
+        this.buckets.forEach((linkedList) => {
+            let currentNode = linkedList.head;
+            while(currentNode != null) {
+                valueList.push(currentNode.value);
+                currentNode = currentNode.next;
+            }
+        })
+        return valueList;
     }
 
     entries() {
-
+        let entryList = [];
+        this.buckets.forEach((linkedList) => {
+            let currentNode = linkedList.head;
+            while(currentNode != null) {
+                entryList.push([currentNode.key, currentNode.value]);
+                currentNode = currentNode.next;
+            }
+        })
+        return entryList;
     }
 }
 
-
-let hm = new HashMap(.5, 2)
-console.log(hm)
-hm.set('apple', 'red')
-console.log(hm)
-hm.set('carrot', 'orange')
-console.log(hm)
-hm.buckets.forEach((idx, currentList) => {console.log(idx, currentList.toString())})
+export {HashMap}
