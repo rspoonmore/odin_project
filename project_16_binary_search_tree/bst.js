@@ -4,6 +4,17 @@ class Node {
         this.left = left;
         this.right = right;
     }
+
+    get numChildren() {
+        let children = 0;
+        if (this.left !== null) {
+            children += 1;
+        }
+        if (this.right !== null) {
+            children += 1;
+        }
+        return children;
+    }
 }
 
 class Tree {
@@ -45,6 +56,109 @@ class Tree {
         };
 
         prettyPrint(this.root)
+    }
+
+    insert(value) {
+        if (this.root === null) {
+            this.root = new Node(value);
+            return;
+        }
+        let currentNode = this.root;
+        while (currentNode !== null) {
+            if (value < currentNode.data) {
+                if (currentNode.left === null) {
+                    currentNode.left = new Node(value);
+                    return;
+                }
+                else {
+                    currentNode = currentNode.left;
+                }
+            }
+            else {
+                if (currentNode.right === null) {
+                    currentNode.right = new Node(value);
+                    return;
+                }
+                else {
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+
+    }
+
+    remove(value) {
+        if (this.root === null) {
+            return false;
+        }
+        let currentParent = null;
+        let currentNode = this.root;
+        while (currentNode !== null) {
+            if (value == currentNode.data) {
+                const numChildren = currentNode.numChildren;
+                // no children
+                if (numChildren == 0) {
+                    if (currentNode === this.root) {
+                        this.root = null;
+                        return true;
+                    }
+                    if (currentParent.left === currentNode) {
+                        currentParent.left = null;
+                        return true;
+                    }
+                    currentParent.right = null;
+                    return true;
+                }
+
+                // only one child
+                if (numChildren == 1) {
+                    const child = currentNode.left === null ? currentNode.right : currentNode.left;
+                    if (currentParent.left === currentNode) {
+                        currentParent.left = child;
+                        return true;
+                    }
+                    currentParent.right = child;
+                    return true;
+                }
+
+                // multiple children
+                let currentRepParent = currentNode;
+                let currentRepNode = currentNode.right;
+                while (currentRepNode.left !== null) {
+                    currentRepParent = currentRepNode;
+                    currentRepNode = currentRepNode.left;
+                }
+                currentRepNode.left = currentNode.left;
+                if (currentRepParent !== currentNode) {
+                    currentRepParent.left = currentRepNode.right;
+                    currentRepNode.right = currentNode.right;
+                }
+                if (currentParent === null) {
+                    this.root = currentRepNode;
+                    return true;
+                }
+                if (currentParent.left === currentNode) {
+                    currentParent.left = currentRepNode;
+                    return true;
+                }
+                currentParent.right = currentRepNode;
+                return true;
+            }
+            if (value < currentNode.data) {
+                if (currentNode.left === null) {
+                    return false;
+                }
+                currentParent = currentNode;
+                currentNode = currentNode.left;
+            }
+            else {
+                if (currentNode.right === null) {
+                    return false;
+                }
+                currentParent = currentNode;
+                currentNode = currentNode.right;
+            }
+        }
     }
     
      
