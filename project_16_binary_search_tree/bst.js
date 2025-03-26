@@ -160,6 +160,53 @@ class Tree {
             }
         }
     }
+
+    find(value) {
+        if (this.root === null) {
+            return null;
+        }
+        let currentNode = this.root;
+        while(currentNode != null) {
+            if (currentNode.data == value) {
+                return currentNode;
+            }
+            if (value > currentNode.data) {
+                currentNode = currentNode.right;
+            }
+            else {
+                currentNode = currentNode.left;
+            }
+        }
+        return null;
+    }
+
+    appendQueue(currentNode, workingQueue = [], callQueue = []) {
+        if (currentNode === null) {
+            return;
+        }
+        callQueue.push(currentNode);
+        workingQueue.push(currentNode.left);
+        workingQueue.push(currentNode.right);
+        
+    }
+
+    levelOrder(callback) {
+        if (typeof callback != "function") {
+            throw new Error(`callback of ${callback} is not a function`);
+          }
+        if (this.root === null) {
+            return;
+        }
+        let callQueue = [];
+        let workingQueue = [this.root];
+        while (workingQueue.length > 0) {
+            let currentNode = workingQueue.shift();
+            this.appendQueue(currentNode, workingQueue, callQueue);
+        }
+        callQueue.forEach(callback);
+    }
+
+
     
      
 }
