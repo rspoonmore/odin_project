@@ -180,16 +180,6 @@ class Tree {
         return null;
     }
 
-    appendQueue(currentNode, workingQueue = [], callQueue = []) {
-        if (currentNode === null) {
-            return;
-        }
-        callQueue.push(currentNode);
-        workingQueue.push(currentNode.left);
-        workingQueue.push(currentNode.right);
-        
-    }
-
     levelOrder(callback) {
         if (typeof callback != "function") {
             throw new Error(`callback of ${callback} is not a function`);
@@ -197,17 +187,134 @@ class Tree {
         if (this.root === null) {
             return;
         }
+
+        function appendQueue(currentNode, workingQueue = [], callQueue = []) {
+            if (currentNode === null) {
+                return;
+            }
+            callQueue.push(currentNode);
+            workingQueue.push(currentNode.left);
+            workingQueue.push(currentNode.right);
+        }
         let callQueue = [];
         let workingQueue = [this.root];
         while (workingQueue.length > 0) {
             let currentNode = workingQueue.shift();
-            this.appendQueue(currentNode, workingQueue, callQueue);
+            appendQueue(currentNode, workingQueue, callQueue);
         }
         callQueue.forEach(callback);
     }
 
 
+    preOrder(callback) {
+        if (typeof callback != "function") {
+            throw new Error(`callback of ${callback} is not a function`);
+        }
+        if (this.root === null) {
+            return;
+        }
+
+        function preOrderTraversal(currentNode, callback) {
+            if (currentNode === null) {
+                return;
+            }
+            callback(currentNode);
+            preOrderTraversal(currentNode.left, callback);
+            preOrderTraversal(currentNode.right, callback);
+        }
+        preOrderTraversal(this.root, callback);
+    }
+
     
+
+    inOrder(callback) {
+        if (typeof callback != "function") {
+            throw new Error(`callback of ${callback} is not a function`);
+        }
+        if (this.root === null) {
+            return;
+        }
+
+        function inOrderTraversal(currentNode, callback) {
+            if (currentNode === null) {
+                return;
+            }
+            inOrderTraversal(currentNode.left, callback);
+            callback(currentNode);
+            inOrderTraversal(currentNode.right, callback);
+        }
+        inOrderTraversal(this.root, callback);
+    }
+
+
+    postOrder(callback) {
+        if (typeof callback != "function") {
+            throw new Error(`callback of ${callback} is not a function`);
+        }
+        if (this.root === null) {
+            return;
+        }
+
+        function postOrderTraversal(currentNode, callback) {
+            if (currentNode === null) {
+                return;
+            }
+            postOrderTraversal(currentNode.left, callback);
+            postOrderTraversal(currentNode.right, callback);
+            callback(currentNode);
+        }
+        postOrderTraversal(this.root, callback);
+    }
+
+    height(node){
+        if(node === null) {
+            return -1;
+        }
+        const lHeight = this.height(node.left);
+        const rHeight = this.height(node.right);
+
+        return Math.max(lHeight, rHeight) + 1;
+    }
+    
+    depth(node){
+        if (this.root === null) {
+            return -1;
+        }
+        const findDepth = (currentNode, currentDepth) => {
+            if (currentNode == null) {
+                return -1;
+            }
+            if(currentNode == node) {
+                return currentDepth + 1;
+            }
+            const lDepth = findDepth(currentNode.left, currentDepth);
+            if (lDepth >= 0) {
+                return lDepth + 1;
+            }
+            const rDepth = findDepth(currentNode.right, currentDepth);
+            if (rDepth >= 0) {
+                return rDepth + 1;
+            }
+            return currentDepth;
+        }
+
+        return findDepth(this.root, -1)
+    }
+
+    isBalanced(){
+        if(this.root === null) {
+            return true;
+        }
+        const lHeight = this.height(this.root.left);
+        const rHeight = this.height(this.root.right);
+        return Math.abs(lHeight - rHeight) < 2;
+    }
+
+    rebalance(){
+        let orderedArray = [];
+        this.inOrder((n) => {orderedArray.push(n.data)});
+        this.root = this.recursiveTreeBuilder(orderedArray);
+    }
      
 }
 

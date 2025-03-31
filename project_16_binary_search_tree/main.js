@@ -24,10 +24,11 @@ tree.print()
 
 
 console.log('************************************************************')
-console.log('levelOrder console.log')
-tree.levelOrder((n) => {console.log(n.data)})
+console.log('postOrder console.log')
+let f = (n) => {console.log(n.data)};
+tree.postOrder(f)
+
 
 console.log('************************************************************')
-console.log('levelOrder not a callback')
-tree.levelOrder(2)
-
+console.log('depth of first 9')
+console.log(tree.depth(tree.root.right.left))
