@@ -46,7 +46,7 @@ class Graph {
         let currentLoc = target;
         while(currentLoc[0] != start[0] || currentLoc[1] != start[1]) {
             path.unshift(currentLoc);
-            currentLoc = this.vMap[currentLoc[0]][currentLoc[1]];
+            currentLoc = this.vMap[currentLoc[0]][currentLoc[1]][0];
             if (currentLoc.length == 0) {
                 throw new Error('Traversal from target hit dead end');
             }
@@ -57,7 +57,7 @@ class Graph {
     }
 
     printPath(path) {
-        console.log(`You made it in ${path.length} moves!`)
+        console.log(`You made it in ${path.length - 1} moves!`)
         for(let i = 0; i < path.length; i++) {
             console.log(path[i])
         }
@@ -66,24 +66,28 @@ class Graph {
     findPath(start, target) {
         this.clearVMap()
         this.vMap[start[0]][start[1]] = start;
-        let workingQueue = [start]
+        let workingQueue = [[start, 0]];
+        let lowestCost = null;
         while (workingQueue.length > 0) { // while there are still cells to visit
-            let currentLoc = workingQueue.shift();
+            let [currentLoc, currentCost] = workingQueue.shift();
+            if (lowestCost !== null && currentCost >= lowestCost - 1) {continue} // only proceed if not past the lowest cost
             for (let i=0; i < this.potentialMovements.length; i++) {// For each potential move
                 let move = this.potentialMovements[i];
                 let newLoc = [currentLoc[0], currentLoc[1]];
                 newLoc[0] += move[0];
                 newLoc[1] += move[1];
                 if(!this.isValidLocation(newLoc)) {continue} // check valid location
-                if(this.vMap[newLoc[0]][newLoc[1]].length > 0) {continue} // check if already visited
-                workingQueue.push(newLoc);
-                this.vMap[newLoc[0]][newLoc[1]] = currentLoc
+                let mappedData = this.vMap[newLoc[0]][newLoc[1]]
+
+                if(typeof(mappedData) == "object" & mappedData[1] < currentCost + 1) {continue} // got there in fewer moves
+                workingQueue.push([newLoc, currentCost + 1]);
+                this.vMap[newLoc[0]][newLoc[1]] = [currentLoc, currentCost]
                 if(newLoc[0] == target[0] & newLoc[1] == target[1]) { // If target found
-                    this.printPath(this.getPathFromTarget(start, target))
-                    return;
+                    lowestCost = lowestCost === null ? currentCost : Math.min([currentCost, lowestCost])
                 }
             }
         }
+        this.printPath(this.getPathFromTarget(start, target))
         return false;
         
     }
