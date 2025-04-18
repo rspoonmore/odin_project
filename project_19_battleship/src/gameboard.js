@@ -31,13 +31,54 @@ class GameBoard {
     }
 
     printBoard() {
-        let board = ""
+        let board = "";
+        let header = " \t";
+        let subHeader = ' \t';
         for(let j = this.boardY - 1; j >= 0; j--) {
+            board += `${j}|\t`;
+            let rowSplit = ' \t';
             for(let i = 0; i < this.boardX; i++) {
                 board += this.spaces[i][j].hasShip ? 'S' : 'O';
+                board += ' |\t'
+                rowSplit += '--------';
+                if(j == 0) {
+                    header += `${i} |\t`;
+                    subHeader += '--------';
+                }
             }
-            board += '\n'
+            board = board + '\n' + rowSplit + '\n'
         }
+        header += '\n';
+        subHeader += '\n'
+        board = header + subHeader + board;
+        console.log(board);
+    }
+
+    printPlays() {
+        let board = "";
+        let header = " \t";
+        let subHeader = ' \t';
+        for(let j = this.boardY - 1; j >= 0; j--) {
+            board += `${j}|\t`;
+            let rowSplit = ' \t';
+            for(let i = 0; i < this.boardX; i++) {
+                let currentSpaceStr = 'O';
+                if (this.spaces[i][j].played) {
+                    currentSpaceStr = this.spaces[i][j].hasShip ? '*': 'X';
+                }
+                board += currentSpaceStr;
+                board += ' |\t'
+                rowSplit += '--------';
+                if(j == 0) {
+                    header += `${i} |\t`;
+                    subHeader += '--------';
+                }
+            }
+            board = board + '\n' + rowSplit + '\n'
+        }
+        header += '\n';
+        subHeader += '\n'
+        board = header + subHeader + board;
         console.log(board);
     }
 
@@ -67,6 +108,28 @@ class GameBoard {
             }
             currentSpace.ship = newShip;
         }
+    }
+
+    receiveAttack(attackX, attackY) {
+        if(attackX < 0 | attackX >= this.boardX | attackY < 0 | attackY >= this.boardY) {
+            throw new Error('Attack is out of bounds');
+        }
+
+        const attackedSpace = this.spaces[attackX][attackY];
+
+        if(attackedSpace.played) {
+            throw new Error('Space already attacked');
+        }
+
+        attackedSpace.played = true;
+        if(attackedSpace.ship == null) {
+            return 'miss';
+        }
+        attackedSpace.ship.hit();
+        if(attackedSpace.ship.isSunk) {
+            return 'sink'
+        }
+        return 'hit'
     }
 }
 
