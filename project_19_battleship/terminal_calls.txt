@@ -14,13 +14,13 @@
 
 **FOR TESTING** 
     npm install --save-dev jest babel-jest @babel/core @babel/preset-env
-    touch babel.config.js
+    touch babel.config.js main.test.js
 
     * Paste the following to babel.config.js *
     module.exports = {
         presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
     };
-    
+
 
 npm run build
 npm run dev
