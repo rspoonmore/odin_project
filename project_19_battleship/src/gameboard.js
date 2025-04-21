@@ -82,19 +82,38 @@ class GameBoard {
         console.log(board);
     }
 
-    placeShip(location, shipLength, direction) {
+    isValidShipLocation(location, shipLength, direction) {
         if(shipLength < 1) {
-            throw new Error('Must have ship length > 0');
+            return false;
         }
         if(direction != 0 & direction != 1) {
-            throw new Error('Direction numeral must be either 0 or 1');
+            return false;
         }
         if(direction == 0 & shipLength + location[0] > this.boardX) {
-            throw new Error('Ship runs off of board horizontally');
+            return false;
         }
         if(direction == 1 & shipLength + location[1] > this.boardY) {
-            throw new Error('Ship runs off of board vertically');
+            return false;
         }
+
+        for(let i = 0; i < shipLength; i++) {
+            let currentSpace = undefined;
+            if(direction == 0){
+                currentSpace = this.spaces[location[0] + i][location[1]];
+            }
+            else {
+                currentSpace = this.spaces[location[0]][location[1] + i];
+            }
+            if(currentSpace == undefined | currentSpace.hasShip) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    placeShip(location, shipLength, direction) {
+        if(!this.isValidShipLocation(location, shipLength, direction)){ throw new Error('Ship placement is not valid')}
 
         let newShip = new Ship(shipLength);
 
@@ -108,6 +127,22 @@ class GameBoard {
             }
             currentSpace.ship = newShip;
         }
+    }
+
+    generateRandomBoard(shipLengths) {
+        shipLengths.forEach((currentShipLength) => {
+            let isPlaced = false;
+            while(!isPlaced) {
+                const direction = Math.floor(Math.random() * 2);
+                const placeX = Math.floor(Math.random() * this.boardX);
+                const placeY = Math.floor(Math.random() * this.boardY);
+                if(this.isValidShipLocation([placeX, placeY], currentShipLength, direction)){
+                    this.placeShip([placeX, placeY], currentShipLength, direction)
+                    isPlaced = true;
+                }
+            }
+        })
+        
     }
 
     receiveAttack(attackX, attackY) {
