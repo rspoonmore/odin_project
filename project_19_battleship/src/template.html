@@ -8,11 +8,18 @@
     <div class="container">
         <h1>Battleship</h1>
         <button id="reset">Restart</button>
-        <div id="board">
-
+        <div id="board-container">
+            <div id="player-side">
+                <h3>Player Board</h3>
+                <div class="board" id="player-board"></div>
+                <h4 class="message" id="player-top-message"></h4>
+                <h4 class="message" id="player-bottom-message"></h4>
+            </div>
+            <div id="computer-side">
+                <h3>Computer Board</h3>
+                <div class="board" id="computer-board"></div>
+            </div>
         </div>
-        <h3 class="message" id="result"></h3>
-        <h3 class="message" id="instruct"></h3>
 
         
     </div>

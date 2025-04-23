@@ -2,13 +2,17 @@
     text-align: center;
 }
 
-#board {
+#board-container {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: center;
+}
+
+.board {
     background-color: aqua;
     margin: 10px auto;
-    /* width: 500px; */
-
     display: grid;
-    /* grid-template: repeat(10, 50px) / repeat(10, 50px); */
 }
 
 .square {
@@ -18,4 +22,8 @@
 
 .selected {
     outline: 3px solid black;
+}
+
+.quiet {
+    background-color: grey;
 }

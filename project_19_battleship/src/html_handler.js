@@ -1,8 +1,10 @@
 const container = document.querySelector('.container');
-const boardContainer = document.querySelector('#board');
+const playerBoardContainer = document.querySelector('#player-board');
+const compBoardContainer = document.querySelector('#computer-board');
 
 
-function createBoard(x, y) {
+function createBoard(x, y, player) {
+    const boardContainer = player ? playerBoardContainer : compBoardContainer;
     boardContainer.innerHTML = "";
     boardContainer.style.gridTemplate = `repeat(${y}, 50px) / repeat(${x}, 50px)`;
     boardContainer.style.width = `${x*50}px`
@@ -15,6 +17,30 @@ function createBoard(x, y) {
         }
     }
 };
+
+function setBoardState(player, state) {
+    if(state != 'quiet' & state != 'selectable') {
+        throw new Error(`State must equal quiet or selectable but ${state} was given`)
+    }
+    const queryString = `#${player ? 'player' : 'computer'}-board > .square`
+    const squares = document.querySelectorAll(queryString);
+    squares.forEach(square => {
+        if(square.classList.contains('selected')) {
+            square.classList.remove('selected');
+        }
+        if(state == 'quiet' & !square.classList.contains('quiet')) {
+            square.classList.add('quiet');
+        }
+        if(state == 'selectable' & square.classList.contains('queit')) {
+            square.classList.remove('quiet');
+        }
+    })
+}
+
+export { createBoard, setBoardState }
+
+
+/*
 
 function translateIDToIDX(squareID) {
     const firstSlice = squareID.indexOf('-');
@@ -108,12 +134,19 @@ function addShip(x, y, direction, shipLength) {
 };
 
 function createPlayerBoard(x, y, shipLengths, returnFunc) {
-    createBoard(x, y);
+    createBoard(x, y, true);
     clearBoard();
     askForShip(shipLengths, [], returnFunc);
+}
+
+function createComputerBoard(x, y, shipLengths) {
+    createBoard(x, y, false);
+    clearBoard();
 }
 
 
 
 
-export {createPlayerBoard}
+export {createPlayerBoard, createComputerBoard}
+
+*/
