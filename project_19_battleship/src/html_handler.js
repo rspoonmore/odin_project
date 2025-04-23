@@ -45,7 +45,7 @@ function clearBoard() {
     })
 }
 
-function askForShip(shipLengths = [], placements=[]) {
+function askForShip(shipLengths, placements, returnFunc) {
     if(shipLengths.length == 0) {
         const messageDiv = document.querySelector('#result')
         const shipInfoDiv = document.querySelector('#instruct');
@@ -62,9 +62,8 @@ function askForShip(shipLengths = [], placements=[]) {
         submitButton.textContent = 'Start';
         submitButton.addEventListener('click', () => {
             clearBoard()
-            console.log(placements)
+            returnFunc(placements);
         })
-
 
         container.appendChild(submitButton)
     }
@@ -92,7 +91,7 @@ function askForShip(shipLengths = [], placements=[]) {
             const shipInfoArray = shipInfoText.split(' ');
             addShip(location[0], location[1], shipInfoArray[2] == 'Horizontally' ? 0 : 1, parseInt(shipInfoArray[0]))
             placements.push([location[0], location[1], shipInfoArray[2] == 'Horizontally' ? 0 : 1, parseInt(shipInfoArray[0])])
-            askForShip(shipLengths, placements);
+            askForShip(shipLengths, placements, returnFunc);
         })
 
         container.appendChild(submitButton);
@@ -108,10 +107,10 @@ function addShip(x, y, direction, shipLength) {
     }
 };
 
-function createPlayerBoard(x, y, shipLengths) {
+function createPlayerBoard(x, y, shipLengths, returnFunc) {
     createBoard(x, y);
     clearBoard();
-    askForShip(shipLengths);
+    askForShip(shipLengths, [], returnFunc);
 }
 
 
