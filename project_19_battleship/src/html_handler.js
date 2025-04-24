@@ -19,7 +19,7 @@ function createBoard(x, y, player) {
 };
 
 function setBoardState(player, state) {
-    if(state != 'quiet' & state != 'selectable') {
+    if(!['quiet', 'selectable', 'view'].includes(state)) {
         throw new Error(`State must equal quiet or selectable but ${state} was given`)
     }
     const queryString = `#${player ? 'player' : 'computer'}-board > .square`
@@ -31,13 +31,86 @@ function setBoardState(player, state) {
         if(state == 'quiet' & !square.classList.contains('quiet')) {
             square.classList.add('quiet');
         }
-        if(state == 'selectable' & square.classList.contains('queit')) {
+        if(state == 'quiet') {
+            square.textContent = "";
+        }
+        if(['selectable', 'view'].includes(state) & square.classList.contains('quiet')) {
             square.classList.remove('quiet');
         }
     })
-}
 
-export { createBoard, setBoardState }
+    const button = document.querySelector(`#${player ? 'player' : 'computer'}-submit`);
+    if(['view', 'quiet'].includes(state)) {
+        createMessage(player, "", "", "");
+        button.style.display = 'none';
+    }
+    else {
+        button.style.display = 'inline';
+    }
+};
+
+function clearSelectedClass(player) {
+    const queryString = `#${player ? 'player' : 'computer'}-board > .square`;
+    const squares = document.querySelectorAll(queryString);
+    squares.forEach((square) => {
+        if(square.classList.contains('selected')) {
+            square.classList.remove('selected')
+        }
+    })
+};
+
+function setBoardFunction(player, eventFunc) {
+    const queryString = `#${player ? 'player' : 'computer'}-board > .square`;
+    const squares = document.querySelectorAll(queryString);
+    squares.forEach(square => {
+        square.addEventListener('click', () => {
+            clearSelectedClass(player);
+            eventFunc(square);
+        })
+    })
+};
+
+function translateIDToIDX(squareID) {
+    const firstSlice = squareID.indexOf('-');
+    const secondSlice = squareID.indexOf('-', firstSlice + 1);
+    const x = parseInt(squareID.slice(firstSlice + 1, secondSlice));
+    const y = parseInt(squareID.slice(secondSlice + 1, squareID.length));
+    return [x, y];
+};
+
+function createMessage(player, topMessage, bottomMessage, buttonMessage) {
+    const topMessageDiv = document.querySelector(`#${player ? 'player' : 'computer'}-top-message`);
+    const bottomMessageDiv = document.querySelector(`#${player ? 'player' : 'computer'}-bottom-message`);
+    const button = document.querySelector(`#${player ? 'player' : 'computer'}-submit`);
+
+    topMessageDiv.textContent = topMessage;
+    bottomMessageDiv.textContent = bottomMessage;
+    button.textContent = buttonMessage;
+};
+
+function addSubmitFunction(player, submitFunc) {
+    const button = document.querySelector(`#${player ? 'player' : 'computer'}-submit`);
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button)
+    newButton.addEventListener('click', submitFunc);
+};
+
+function findSelectedSquare(player) {
+    const queryString = `#${player ? 'player' : 'computer'}-board > .selected`;
+    const square = document.querySelector(queryString);
+    return translateIDToIDX(square.id);
+};
+
+function addTextToSquare(player, x, y, direction, shipLength, txt = "") {
+    for(let i=0; i < shipLength; i++){
+        const currX = direction == 0 ? x + i : x;
+        const currY = direction == 0 ? y : y + i;
+        const currSquare = document.querySelector(`#${player ? 'player' : 'computer'}-board > #square-${currX}-${currY}`);
+        currSquare.textContent = txt;
+    }
+};
+
+export { createBoard, setBoardState, setBoardFunction, createMessage, findSelectedSquare, addSubmitFunction, addTextToSquare }
 
 
 /*

@@ -9,6 +9,11 @@
     justify-content: center;
 }
 
+.submit {
+    /* display: inline; */
+    display: none;
+}
+
 .board {
     background-color: aqua;
     margin: 10px auto;
@@ -18,6 +23,9 @@
 .square {
     outline: 1px solid black;
     margin: 5px;
+    text-align: center;
+    align-content: center;
+    font-weight: bolder;
 }
 
 .selected {

@@ -13,6 +13,8 @@ function newGame(boardX, boardY, placements, computerShipLengths) {
     const board2 = new GameBoard(boardX, boardY);
     const player2 = new Player(true, board2);
     player2.generateComputerBoard(computerShipLengths);
+
+    return [player1, player2];
 };
 
 export {newGame}

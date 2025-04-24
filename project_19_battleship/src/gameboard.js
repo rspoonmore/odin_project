@@ -16,6 +16,7 @@ class GameBoard {
         this.boardX = boardX;
         this.boardY = boardY;
         this.spaces = this.createBoard();
+        this.ships = [];
     }
 
     createBoard() {
@@ -116,6 +117,7 @@ class GameBoard {
         if(!this.isValidShipLocation(location, shipLength, direction)){ throw new Error('Ship placement is not valid')}
 
         let newShip = new Ship(shipLength);
+        this.ships.push(newShip);
 
         for(let i = 0; i < shipLength; i++) {
             let currentSpace = undefined;
@@ -165,6 +167,16 @@ class GameBoard {
             return 'sink'
         }
         return 'hit'
+    }
+
+    get isAlive() {
+        for(let i = 0; i < this.ships.length; i++) {
+            const ship = this.ships[i]
+            if(!ship.isSunk) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
