@@ -1,46 +1,37 @@
 import "./style.css";
-import { createBoard, setBoardState, setBoardFunction, createMessage, findSelectedSquare, addSubmitFunction, addTextToSquare } from "./html_handler.js";
+import { createBoard, setBoardState, setBoardFunction, createMessage, findSelectedSquare, addSubmitFunction, addTextToSquare, setMainMessage } from "./html_handler.js";
 import { newGame } from "./object_handler.js";
 
-/*
-function gameFlow(x, y, ships) {
-    const returnFunc = function takePlacements(placements) {
-        newGame(x, y, placements, ships);
-    }
-
-    createPlayerBoard(x, y, [...ships], returnFunc);
-    createComputerBoard(x, y, ships)
-};
-
 const x = 10;
 const y = 10;
-const ships = [2, 2, 3, 1];
-
-const restartButton = document.querySelector('#reset');
-restartButton.addEventListener('click', () => {gameFlow(x, y, ships)});
+const ships = [1, 2, 2, 3, 3, 4];
 
 
-gameFlow(x, y, ships);
-*/
+function battleship(x, y, ships) {
+    const restartButton = document.querySelector('#reset');
+    restartButton.addEventListener('click', () => {
+        startGame(x, y);
+        askForShips([...ships]);
+        restartButton.textContent = "Reset";
+    })
+}
 
-const x = 10;
-const y = 10;
-const ships = [2, 2, 3, 1];
-const restartButton = document.querySelector('#reset');
-
-createBoard(x, y, true);
-createBoard(x, y, false);
-setBoardState(true, 'selectable');
-setBoardState(false, 'quiet');
-
+function startGame(x, y) {
+    createBoard(x, y, true);
+    createBoard(x, y, false);
+    setBoardState(true, 'selectable');
+    setBoardState(false, 'quiet');
+    setMainMessage('Time to create your board!')
+}
 
 
 function askForShips(remainingShips = [], locations = []) {
     if(remainingShips.length == 0) {
-        // continue to next steps
         setBoardState(true, 'view');
         const players = newGame(x, y, locations, ships);
-        takeTurn(players, 0);
+        setBoardState(true, 'view');
+        setMainMessage("Time to play!");
+        takeTurn(players, 0, 0);
         
     }
     else {
@@ -57,46 +48,36 @@ function askForShips(remainingShips = [], locations = []) {
     }
 }
 
-function takeTurn(players, playerNum) {
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+async function takeTurn(players, playerNum, waitTime=0) {
     const player = players[playerNum];
     if(!player.board.isAlive) {
-        alert(`${player.isComputer ? 'Computer' : 'Player'} has been defeated`)
+        alert(`${player.isComputer ? 'Computer' : 'Player'} has been defeated!`)
+        setBoardState(false, 'view');
         return
     }
     if(!player.isComputer) {
         setBoardState(false, 'selectable');
-        setBoardState(true, 'view');
         setBoardFunction(false, (e) => {e.classList.toggle('selected')})
         createMessage(false, 'Select your next target location', '', 'Attack');
         addSubmitFunction(false, () => {
             const selectedIDX = findSelectedSquare(false);
             const result = players[playerNum == 0 ? 1 : 0].board.receiveAttack(selectedIDX[0], selectedIDX[1]);
-            alert(`Attack was a ${result}`);
+            setMainMessage(`Attack at ${selectedIDX} was a ${result}`);
             addTextToSquare(false, selectedIDX[0], selectedIDX[1], 0, 1, result == 'miss' ? '-' : '*');
-            takeTurn(players, playerNum == 0 ? 1 : 0)
+            takeTurn(players, playerNum == 0 ? 1 : 0, 2500)
         })
     }
     else {
+        setBoardState(false, 'view');
         const attack = player.computerAttack();
+        await delay(waitTime);
         const result = players[playerNum == 0 ? 1 : 0].board.receiveAttack(attack[0], attack[1]);
-        alert(`Computer attack was a ${result}`);
+        setMainMessage(`Computer attack at ${attack} was a ${result}`);
         addTextToSquare(true, attack[0], attack[1], 0, 1, result == 'miss' ? '-' : '*');
-        takeTurn(players, playerNum == 0 ? 1 : 0)
+        takeTurn(players, playerNum == 0 ? 1 : 0, 0)
     }
 }
 
-askForShips([...ships], [])
-
-/*
-Game steps
-1. determine player boat locations
-    - empty comp board, selectable player board
-    - selecting updates player board
-2. player turn
-    - reference player board, selectable comp board
-    - selecting updates player guess on comp board
-3. computer turn
-    - reference player board, reference comp board
-    - no selection
-
-*/
+battleship(x, y, [...ships])

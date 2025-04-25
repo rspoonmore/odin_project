@@ -18,8 +18,8 @@ class Player {
         while (!hasAttacked) {
             const attackX = Math.floor(Math.random() * this.board.boardX);
             const attackY = Math.floor(Math.random() * this.board.boardY);
-            if(!this.attackHistory.includes((attackX, attackY))) {
-                this.attackHistory.push((attackX, attackY));
+            if(!this.attackHistory.includes(`${attackX}, ${attackY}`)) {
+                this.attackHistory.push(`${attackX}, ${attackY}`);
                 return [attackX, attackY];
             }
         }
