@@ -1,8 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Form from './components/SimpleForm/forms.jsx'
 import './App.css'
 
+function App() {
+  const startingKey = crypto.randomUUID()
+
+  return (
+    <>
+      <Form label="Test Value:" formID = "name" formKey={startingKey} value="Test"></Form>
+    </>
+  )
+}
+
+export default App
+
+
+/*
 function App() {
   const [count, setCount] = useState(0)
 
@@ -33,3 +45,4 @@ function App() {
 }
 
 export default App
+*/
