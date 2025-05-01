@@ -1,23 +1,21 @@
 import { useState } from 'react'
-import NameForm from './components/nameform.jsx'
+import NameForm from './components/nameform'
 import './App.css'
+import EducationForm from './components/EducationForm'
 
 function App() {
   const sampleData = {
     'name': "John Doe",
     'email': 'john.doe@gmail.com',
-    'school': 'State University',
-    'major': 'Computer Science'
+    'education': [{'id': crypto.randomUUID(), 'school': 'University of Tech', 'major': 'Computer Science'}]
   }
-
   const emptyData = {
     'name': "",
     'email': "",
-    'school': "",
-    'major': ""
+    'education': []
   }
 
-  const useSampleData = false;
+  const useSampleData = true;
 
   const [cvData, setCVData] = useState(useSampleData ? sampleData : emptyData)
 
@@ -26,9 +24,12 @@ function App() {
       <NameForm 
         cvData = {cvData}
         setCVData = {setCVData}
-      >
-        
-      </NameForm>
+      ></NameForm>
+
+      <EducationForm
+        cvData={cvData}
+        setCVData={setCVData}
+      ></EducationForm>
     </>
   )
 }
