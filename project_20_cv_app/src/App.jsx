@@ -1,12 +1,34 @@
-import Form from './components/SimpleForm/forms.jsx'
+import { useState } from 'react'
+import NameForm from './components/nameform.jsx'
 import './App.css'
 
 function App() {
-  const startingKey = crypto.randomUUID()
+  const sampleData = {
+    'name': "John Doe",
+    'email': 'john.doe@gmail.com',
+    'school': 'State University',
+    'major': 'Computer Science'
+  }
+
+  const emptyData = {
+    'name': "",
+    'email': "",
+    'school': "",
+    'major': ""
+  }
+
+  const useSampleData = false;
+
+  const [cvData, setCVData] = useState(useSampleData ? sampleData : emptyData)
 
   return (
     <>
-      <Form label="Test Value:" formID = "name" formKey={startingKey} value="Test"></Form>
+      <NameForm 
+        cvData = {cvData}
+        setCVData = {setCVData}
+      >
+        
+      </NameForm>
     </>
   )
 }
