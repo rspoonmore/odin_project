@@ -4,27 +4,28 @@ import SectionHeader from './SectionHeader'
 import NewEducationForm from './NewEducationForm';
 import EducationDisplay from './EducationDisplay';
 
-function slugify(str) {
-    return str
-      .replace(/[^A-Za-z0-9]+/g, '')  // remove anything that isn't A–Z, a–z, or 0–9
-      .toLowerCase();
-  }
-
 function EducationForm({ cvData, setCVData}) {
+    const blankEDU = {'id': crypto.randomUUID(), 'school': '', 'major': ''};
     const [showForm, setShowForm] = useState(true);
     const [showNewEduForm, setShowNewEduForm] = useState(true);
     const [education, setEducation] = useState(cvData['education'])
+    const [currEdu, setCurrEdu] = useState(blankEDU);
+    const [formIsNew, setFormIsNew] = useState(true)
 
-    function getValue(key, value) {
-        return education[key] ? education[key][value] : ""
-    }
+    
 
     function showEducation(education) {
         return (
             <div className='education-display'>
                 {education.map((edu) => {
                     if(edu.school != ''){
-                        return (<EducationDisplay key={edu.id + '-display'} eduPiece={edu}></EducationDisplay>)
+                        const onEdit = () => {
+                            setFormIsNew(false)
+                            setCurrEdu(edu)
+                            setShowForm(true)
+                            setShowNewEduForm(true)
+                        }
+                        return (<EducationDisplay key={edu.id + '-display'} eduPiece={edu} onEdit={onEdit}></EducationDisplay>)
                     }
                 })}
             </div>
@@ -32,10 +33,11 @@ function EducationForm({ cvData, setCVData}) {
     }
 
     function generateNewForm() {
-        const [currEdu, setCurrEdu] = useState({'id': crypto.randomUUID(), 'school': '', 'major': ''});
-        
         return (
             <NewEducationForm
+                key = 'education-form'
+                isNew = {formIsNew}
+                setIsNew = {setFormIsNew}
                 show = {showNewEduForm}
                 setShow = {setShowNewEduForm}
                 currEdu={currEdu}
@@ -47,6 +49,13 @@ function EducationForm({ cvData, setCVData}) {
         )
     }
 
+    function showButtonClicked() {
+        {if(showNewEduForm) {
+            setCurrEdu(blankEDU);
+        }}
+        {setShowNewEduForm(!showNewEduForm);}
+    }
+
 
 
     return (
@@ -54,7 +63,7 @@ function EducationForm({ cvData, setCVData}) {
             <SectionHeader headerTitle='Education' showForm={showForm} setShowForm={setShowForm}></SectionHeader>
             <div id='education-content' className={showForm ? '' : 'hidden'}>
                 {showEducation(education)}
-                <button id='new-edu-form' onClick={() => {setShowNewEduForm(!showNewEduForm)}}>{showNewEduForm ? 'Hide New Form' : 'Add New'}</button>
+                <button id='new-edu-form' onClick={showButtonClicked}>{showNewEduForm ? 'Hide New Form' : 'Add New'}</button>
                 {generateNewForm()}
             </div>
         </div>

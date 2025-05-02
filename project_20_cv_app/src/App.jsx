@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import NameForm from './components/nameform'
 import './App.css'
-import EducationForm from './components/EducationForm'
+import UISide from './components/UISide'
 
 function App() {
   const sampleData = {
@@ -21,15 +20,7 @@ function App() {
 
   return (
     <>
-      <NameForm 
-        cvData = {cvData}
-        setCVData = {setCVData}
-      ></NameForm>
-
-      <EducationForm
-        cvData={cvData}
-        setCVData={setCVData}
-      ></EducationForm>
+      <UISide cvData={cvData} setCVData={setCVData}></UISide>
     </>
   )
 }
