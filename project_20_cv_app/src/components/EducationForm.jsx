@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import '../../styles/EducationForm.css'
 import SectionHeader from './SectionHeader'
-import NewEducationForm from './NewEducationForm';
-import EducationDisplay from './EducationDisplay';
+import NewElementForm from './NewElementForm';
+import SubmittedUIDisplay from './SubmittedUIDisplay';
 
 function EducationForm({ cvData, setCVData}) {
     const blankEDU = {'id': crypto.randomUUID(), 'school': '', 'major': ''};
@@ -25,7 +25,7 @@ function EducationForm({ cvData, setCVData}) {
                             setShowForm(true)
                             setShowNewEduForm(true)
                         }
-                        return (<EducationDisplay key={edu.id + '-display'} eduPiece={edu} onEdit={onEdit}></EducationDisplay>)
+                        return (<SubmittedUIDisplay key={edu.id + '-display'} section='education' sectionData={edu} onEdit={onEdit}></SubmittedUIDisplay>)
                     }
                 })}
             </div>
@@ -34,18 +34,20 @@ function EducationForm({ cvData, setCVData}) {
 
     function generateNewForm() {
         return (
-            <NewEducationForm
+            <NewElementForm
                 key = 'education-form'
+                section='education'
+                baseElement={blankEDU}
                 isNew = {formIsNew}
                 setIsNew = {setFormIsNew}
                 show = {showNewEduForm}
                 setShow = {setShowNewEduForm}
-                currEdu={currEdu}
-                setCurrEdu={setCurrEdu}
-                education={education}
-                setEducation={setEducation}
+                currElement={currEdu}
+                setCurrElement={setCurrEdu}
+                currSectionData={education}
+                setCurrSectionData={setEducation}
                 setCVData={setCVData}
-            ></NewEducationForm>
+            ></NewElementForm>
         )
     }
 

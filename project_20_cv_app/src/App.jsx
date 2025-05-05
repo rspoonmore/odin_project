@@ -6,12 +6,14 @@ function App() {
   const sampleData = {
     'name': "John Doe",
     'email': 'john.doe@gmail.com',
-    'education': [{'id': crypto.randomUUID(), 'school': 'University of Tech', 'major': 'Computer Science'}]
+    'education': [{'id': crypto.randomUUID(), 'school': 'University of Tech', 'major': 'Computer Science'}],
+    'experience': [{'id': crypto.randomUUID(), 'company': 'Company A', 'startDate': '2024', 'endDate': '', 'desc': 'description of role'}]
   }
   const emptyData = {
     'name': "",
     'email': "",
-    'education': []
+    'education': [],
+    'experience': []
   }
 
   const useSampleData = true;

@@ -1,6 +1,7 @@
-import NameForm from './nameform'
 import '../../styles/UISide.css'
+import NameForm from './nameform'
 import EducationForm from './EducationForm'
+import ExperienceSection from './ExperienceSection'
 
 function UISide({cvData, setCVData}) {
     return (
@@ -14,6 +15,11 @@ function UISide({cvData, setCVData}) {
                 cvData={cvData}
                 setCVData={setCVData}
             ></EducationForm>
+
+            <ExperienceSection
+                cvData={cvData}
+                setCVData={setCVData}
+            ></ExperienceSection>
         </div>
     )
 }

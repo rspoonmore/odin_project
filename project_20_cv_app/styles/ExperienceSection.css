@@ -1,0 +1,51 @@
+div.section {
+    display: block;
+    background-color: lightgray;
+    text-align: start;
+    margin: 0px;
+    padding: .5rem;
+    width: 100%;
+}
+
+#experience-content {
+    display: block;
+}
+
+#experience-content.hidden {
+    display: none;
+}
+
+#new-exp-form {
+    border-radius: 10px;
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+}
+
+form.hidden {
+    display: none;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5px 0px;
+}
+
+input {
+    width: 250px;
+}
+
+input[type=submit] {
+    width: 75px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.experience-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
