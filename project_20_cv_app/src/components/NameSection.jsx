@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import '../../styles/NameForm.css'
+import '../../styles/NameSection.css'
 import SectionHeader from './SectionHeader'
 
-function NameForm({ cvData, setCVData}) {
+function NameSection({ cvData, setCVData}) {
   const [showForm, setShowForm] = useState(true)
 
   const [demos, setDemos] = useState({
@@ -49,4 +49,4 @@ function NameForm({ cvData, setCVData}) {
   )
 }
 
-export default NameForm
+export default NameSection

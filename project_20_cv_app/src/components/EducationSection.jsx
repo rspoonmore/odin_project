@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import '../../styles/EducationForm.css'
+import '../../styles/EducationSection.css'
 import SectionHeader from './SectionHeader'
 import NewElementForm from './NewElementForm';
 import SubmittedUIDisplay from './SubmittedUIDisplay';
 
-function EducationForm({ cvData, setCVData}) {
+function EducationSection({ cvData, setCVData}) {
     const blankEDU = {'id': crypto.randomUUID(), 'school': '', 'major': ''};
     const [showForm, setShowForm] = useState(true);
     const [showNewEduForm, setShowNewEduForm] = useState(true);
@@ -72,4 +72,4 @@ function EducationForm({ cvData, setCVData}) {
     )
 }
 
-export default EducationForm
+export default EducationSection

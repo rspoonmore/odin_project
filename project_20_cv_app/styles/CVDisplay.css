@@ -1,0 +1,22 @@
+.container {
+    background-color: white;
+    display: block;
+    align-items: start;
+    margin-bottom: auto;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.section {
+    display: block;
+}
+
+.element {
+    display: flex;
+    flex-direction: column;
+    border: 1px dashed black;
+    align-items: flex-start;
+    padding: 5px;
+    margin: 5px 0px;
+    white-space: pre-wrap;
+}

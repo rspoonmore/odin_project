@@ -1,20 +1,20 @@
 import '../../styles/UISide.css'
-import NameForm from './nameform'
-import EducationForm from './EducationForm'
+import NameSection from './NameSection'
+import EducationSection from './EducationSection'
 import ExperienceSection from './ExperienceSection'
 
 function UISide({cvData, setCVData}) {
     return (
         <div id='ui-side-container'>
-            <NameForm 
+            <NameSection 
                 cvData = {cvData}
                 setCVData = {setCVData}
-            ></NameForm>
+            ></NameSection>
 
-            <EducationForm
+            <EducationSection
                 cvData={cvData}
                 setCVData={setCVData}
-            ></EducationForm>
+            ></EducationSection>
 
             <ExperienceSection
                 cvData={cvData}

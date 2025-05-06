@@ -9,47 +9,31 @@ function NewElementForm({section='experience', baseElement={}, isNew = true, set
         setIsNew(true)
     }
 
-    function updateCurrElementData({updater, newElementData}) {
-        if(updater) {
-            setCurrSectionData(prevState => {
-                let newState = [...prevState];
-                for(let i=0; i < newState.length; i++){
-                    if(newState[i]['id'] == newElementData['id']) {
-                        newState[i] = newElementData
-                        return newState
-                    }
+    function updateData({newElementData}) {
+        let newSectionData = [...currSectionData];
+        if(!isNew) {
+            for(let i=0; i < newSectionData.length; i++) {
+                if(newSectionData[i]['id'] == newElementData[0]['id']) {
+                    newSectionData[i] = newElementData[0]
+                    break
                 }
-                return prevState
-            })
+            }
         }
         else {
-            setCurrSectionData(prevState => {
-                return prevState.concat(newElementData)
-            })
+            newSectionData = [...currSectionData].concat(newElementData) 
+            
         }
+        setCurrSectionData(newSectionData)
+        setCVData(prevState => {
+            return {...prevState, [section]: newSectionData}
+        })
     }
 
-    function updateCVData() {
-        setCVData(prevState => ({
-            ...prevState,
-            [section]: currSectionData
-        }))
-    }
-
-    const submitNew = (event) => {
+    const submitForm = (event) => {
         event.preventDefault();
         const newElement = [{...currElement}]
         resetForm()
-        updateCurrElementData({updater: false, newElementData: newElement})
-        updateCVData()
-    }
-
-    const submitEdit = (event) => {
-        event.preventDefault();
-        const newElement = [{...currElement}]
-        resetForm()
-        updateCurrElementData({updater: true, newElementData: newElement[0]})
-        updateCVData()
+        updateData({newElementData: newElement})
     }
 
     const handleChange = (event) => {
@@ -63,7 +47,7 @@ function NewElementForm({section='experience', baseElement={}, isNew = true, set
     function generateForm(){
         if(section == 'experience') {
             return (
-                <form id='exp-form' onSubmit={isNew ? submitNew : submitEdit} className={show ? '' : 'hidden'}>
+                <form id='exp-form' onSubmit={submitForm} className={show ? '' : 'hidden'}>
                         <label>Company:</label>
                         <input type='text' name='company' value={currElement['company']} onChange={handleChange}></input>
                         <label>Start Date:</label>
@@ -78,7 +62,7 @@ function NewElementForm({section='experience', baseElement={}, isNew = true, set
         }
         else {
             return (
-                <form id='edu-form' onSubmit={isNew ? submitNew : submitEdit} className={show ? '' : 'hidden'}>
+                <form id='edu-form' onSubmit={submitForm} className={show ? '' : 'hidden'}>
                         <label>School:</label>
                         <input type='text' name='school' value={currElement['school']} onChange={handleChange}></input>
                         <label>Major:</label>
