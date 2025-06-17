@@ -1,0 +1,11 @@
+.header {
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 26px;
+}
+
+.header > * {
+    color: white;
+}
