@@ -3,7 +3,7 @@ import '../styles/App.css'
 
 function App() {
   return (
-    <div className="container">
+    <div id="main-container">
       <h1>Welcome to SpoonMart!</h1>
       <h3>How can I assist you?</h3>
       <ul>

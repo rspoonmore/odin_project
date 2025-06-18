@@ -1,5 +1,6 @@
-.container {
+#main-container {
   text-align: center;
+  display: block;
 }
 
 ul {

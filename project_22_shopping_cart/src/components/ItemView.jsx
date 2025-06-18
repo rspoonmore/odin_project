@@ -1,6 +1,6 @@
 import '../styles/ItemView.css'
 
-export default function ItemView({itemProps, onChange}) {
+export default function ItemView({itemProps, onIncrease, onDecrease, cartData}) {
     return (
         <div className='container'>
             <div className='info'>
@@ -12,9 +12,9 @@ export default function ItemView({itemProps, onChange}) {
             </div>
             <div>{itemProps.price}</div>
             <div className='quantity'>
-                <div id="current-amount">0</div>
-                <button>-</button>
-                <button>+</button>
+                <div id="current-amount">{itemProps.id in cartData ? cartData[itemProps.id]['count'] : 0}</div>
+                <button onClick={onDecrease}>-</button>
+                <button onClick={onIncrease}>+</button>
             </div>
 
         </div>
