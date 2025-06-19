@@ -7,3 +7,9 @@ ul {
   text-align: left;
   padding: 0 5rem;
 }
+
+.list {
+  justify-items: center;
+  max-height: 750px;
+  overflow: auto;
+}

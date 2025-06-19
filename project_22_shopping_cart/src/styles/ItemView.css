@@ -5,9 +5,20 @@
     border: 1px solid lightgray;
     border-radius: 10px;
     padding: 5px;
-    margin: 10px 0px;
+    margin: 10px 25px;
     gap: 10px;
     min-height: 75px;
+    max-width: 750px;
+}
+
+#checkout {
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    min-height: 50px;
+}
+
+#checkout > button {
+    max-width: 75px;
 }
 
 .info {

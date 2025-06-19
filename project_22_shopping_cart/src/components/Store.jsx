@@ -1,7 +1,7 @@
 import { saveCart, loadCart } from "../DataHandler"
 import { Component } from "react"
 import Header from "./Header"
-import ItemView from "./ItemView"
+import {ItemView} from "./ItemView"
 import "../styles/Store.css"
 
 
@@ -15,7 +15,6 @@ class Store extends Component {
         };
 
         this.generateProductList = this.generateProductList.bind(this);
-        this.cartInfo = this.cartInfo.bind(this);
         this.changeCount = this.changeCount.bind(this);
     }
 
@@ -35,11 +34,12 @@ class Store extends Component {
 
     generateProductList() {
         if (!this.state.productData) {
-            return <li>Loading...</li>
+            return <h3>Loading...</h3>
         }
         else {
             return (
-                this.state.productData.map(json => {
+                <div className='list'>
+                {this.state.productData.map(json => {
                     return <ItemView 
                             key={json.id} 
                             itemProps={json} 
@@ -48,23 +48,19 @@ class Store extends Component {
                             cartData={this.state.cartData}
                             >
                             </ItemView>
-                }))
-        }
-    }
-
-    cartInfo() {
-        if (!this.state.cartData) {
-            return <p>No Cart Data</p>
-        }
-        else {
-            return <p>Cart: {JSON.stringify(this.state.cartData)}</p>
+                })}
+                </div>
+                )
         }
     }
 
     changeCount = (inc, key) => () => { 
-        const prodTitle = this.state.productData[key-1]['title'];
-        const prodID = this.state.productData[key-1]['id'];    
-         
+        const lookupKey = key-1
+        const prodTitle = this.state.productData[lookupKey]['title'];
+        const prodImage = this.state.productData[lookupKey]['image'];
+        const prodDesc = this.state.productData[lookupKey]['description'];
+        const prodPrice = this.state.productData[lookupKey]['price'];
+        const prodID = this.state.productData[lookupKey]['id'];   
         this.setState(currentState => {
             let newCartData = {...currentState.cartData};
             if(inc) {
@@ -72,7 +68,7 @@ class Store extends Component {
                     newCartData[prodID] = {...newCartData[prodID], count: newCartData[prodID]['count'] + 1}
                 }
                 else {
-                    newCartData[prodID] = {'title': prodTitle, 'count': 1};
+                    newCartData[prodID] = {'title': prodTitle, 'image': prodImage, 'description': prodDesc, 'price': prodPrice, 'count': 1};
                 }
             }
             else if (!inc) {
@@ -92,10 +88,7 @@ class Store extends Component {
         return (
         <>
             <Header linkTitle='Cart' linkDest='/cart' onClick={() => {console.log('cart link clicked')}}></Header>
-            {this.cartInfo()}
-            <ul>
-                {this.generateProductList()}
-            </ul>
+            {this.generateProductList()}
 
         </>
     )
