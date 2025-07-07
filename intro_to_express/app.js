@@ -2,10 +2,24 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const messageRouter = require('./routes/messagesRouter');
+const path = require('node:path');
 
-console.log(process.env.PORT)
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.get("/", (req, res) => res.send("Hello, world!"));
+const assetsPath = path.join(__dirname, 'public');
+app.use(express.static(assetsPath));
+
+const links = [
+    {href: "/", text: 'Home'},
+    {href: '/messages', text: 'Messages'}
+];
+
+const users = ['Ryan', 'Carson', 'Rio'];
+
+app.get("/", (req, res) => {
+    res.render('index', {users: users, links: links})
+});
 app.use('/messages', messageRouter);
 
 app.get("/{*splat}", (req, res) => res.send("This is the catch-all page."))
