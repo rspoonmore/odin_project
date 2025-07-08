@@ -6,9 +6,9 @@
   </head>
   <body>
     <% messages.forEach((message) => { %>
-        <%- include('message', {text: message.text, user: message.user, date: message.added}); %>
+        <%- include('message', {text: message.text, user: message.user, date: message.added, link: `/messages/${message.id}`}); %>
     <% }); %>
 
-    <a href="/new">Add new message</a>
+    <a class='btn' href="/new">Add new message</a>
   </body>
 </html>

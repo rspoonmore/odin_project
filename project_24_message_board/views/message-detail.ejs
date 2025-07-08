@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>Mini Messageboard</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <h1>Message Details</h1>
+    <div>
+        <div><strong>Message ID: </strong><%= message.id %></div>
+        <div><strong>Sender: </strong><%= message.user %></div>
+        <div><strong>Date Sent: </strong><%= message.added %></div>
+        <div><strong>Message: </strong><%= message.text %></div>
+        <a href="/">Go Back</a>
+    </div>
+  </body>
+</html>

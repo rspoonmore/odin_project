@@ -1,20 +1,15 @@
 const { Router } = require('express');
-const router = Router();
+const { getMessageByID } = require('../controllers/messageController');
 
-router.get('/', (req, res) => {
-    res.render('form')
-});
+const messageRouter = Router();
 
-router.post('/', (req, res) => {
-    messages.push({
-        text: req.body.message,
-        user: req.body.user,
-        added: new Date()
-    })
-
-    res.redirect('/')
+messageRouter.get('/', (req, res) => {
+    res.send('Blank Message Page')
 })
 
+messageRouter.get('/:messageID', (req, res) => {
+    getMessageByID(req, res)
+});
 
-module.exports = router;
+module.exports = messageRouter;
 

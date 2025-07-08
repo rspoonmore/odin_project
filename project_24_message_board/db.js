@@ -1,18 +1,38 @@
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date()
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date()
+class Messages {
+  constructor() {
+    this.messages = [
+      {
+        id: 1,
+        text: "Hi there!",
+        user: "Amando",
+        added: new Date()
+      },
+      {
+        id: 2,
+        text: "Hello World!",
+        user: "Charles",
+        added: new Date()
+      }
+    ]
+
+    this.nextID = 3;
   }
-];
 
-async function getMessageByUser(user) {
-    return messages.find(message => message.user === user);
-};
+  addMessage(user, text) {
+    const newMessage = {
+      id: this.nextID,
+      text: text,
+      user: user,
+      added: new Date()
+    }
 
-module.exports = {getMessageByUser}
+    this.nextID += 1
+    this.messages.push(newMessage);
+  }
+
+  async getMessageByID(id) {
+    return this.messages.find(message => message.id === Number(id))
+  }
+}
+
+module.exports = {Messages}
