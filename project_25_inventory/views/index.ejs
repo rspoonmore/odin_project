@@ -1,0 +1,24 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <ul>
+        <% if (locals.items && Promise.race([items])) {%>
+            <% items.forEach(item => { %>
+                <li>
+                    Category: <%= item.category %>, Item: <%= item.item_desc %>, Quantity: <%= item.quantity %>
+                    <a href="/<%= item.id %>/update">Update</a>
+                    <form action="/<%= item.id %>/delete" method="POST" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        <% } %>
+    </ul>  
+    <a href="/create">Add an item</a>
+</body>
+</html>
