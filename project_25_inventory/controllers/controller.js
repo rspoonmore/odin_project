@@ -17,9 +17,19 @@ const validateItem = [
 
 async function itemsListGet(req, res) {
     const items = await db.getAllItems();
+    let groupedItems = {}
+    items.forEach(item => {
+        const itemInfo = {'id': item.id, 'item_desc': item.item_desc, 'quantity': item.quantity};
+        if(item.category in groupedItems) {
+            groupedItems[item.category].push(itemInfo)
+        }
+        else {
+            groupedItems[item.category] = [itemInfo]
+        }
+    })
     res.render("index", {
         title: "Item list",
-        items: items,
+        items: groupedItems,
     });
 };
 
