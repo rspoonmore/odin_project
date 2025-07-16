@@ -1,0 +1,10 @@
+psql
+
+### View current list of dbs using \l 
+
+CREATE DATABASE p25;
+
+\c p25;
+
+
+

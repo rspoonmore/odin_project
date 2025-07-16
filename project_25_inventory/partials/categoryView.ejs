@@ -1,0 +1,8 @@
+<div class="category-div">
+    <h2>Category: <%= category %></h2>
+    <ul>
+        <% items[category].forEach(item => { %>
+            <%- include('../partials/itemView', {item: item}) %>
+        <% }); %>
+    </ul>
+</div>
