@@ -1,18 +1,18 @@
 const pool = require("./pool");
 
 async function getAllItems() {
-  const { rows } = await pool.query("SELECT * FROM inventory");
+  const { rows } = await pool.query("SELECT * FROM inventory order by category, item_desc");
   return rows;
 }
 
 async function getItem({category, item_desc}) {
-  const { rows } = await pool.query("SELECT * FROM inventory WHERE category = $1 and item_desc = $2 order by category, id;", [category, item_desc]);
+  const { rows } = await pool.query("SELECT * FROM inventory WHERE category = $1 and item_desc = $2 order by category, item_desc;", [category, item_desc]);
   return rows;
 }
 
 async function getItemByID(id) {
   const { rows } = await pool.query("SELECT * FROM inventory WHERE id = $1;", [id]);
-  return rows;
+  return rows[0];
 }
 
 async function insertItem({category, item_desc, quantity=0}) {

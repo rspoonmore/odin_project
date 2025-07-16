@@ -67,7 +67,7 @@ async function itemUpdateGet(req, res) {
 
 async function itemUpdatePostFunc(req, res) {
     const id = req.params.id;
-    const item = await db.getItemByID(rid);
+    const item = await db.getItemByID(id);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).render("updateItem", {
@@ -76,8 +76,8 @@ async function itemUpdatePostFunc(req, res) {
         errors: errors.array(),
         });
     }
-    const { updatedCategory, updatedItem_desc, quantity } = req.body;
-    await db.updateItemByID({id, updatedCategory, updatedItem_desc, quantity})
+    const { category, item_desc, quantity } = req.body;
+    await db.updateItemByID({id, category, item_desc, quantity})
     res.redirect("/");
 }
 

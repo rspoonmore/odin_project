@@ -3,14 +3,18 @@
 <html>
 <head>
   <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-    <h1><%= title %></h1>
+    <div class="header">
+        <h1><%= title %></h1>
+        <a id='new-item-btn' href="/create">Add an item</a>
+    </div>
     <% if (locals.items) {%>
         <% Object.keys(items).forEach(category => { %>
             <%- include('../partials/categoryView', {category: category}) %>
         <% }); %>
     <% } %>
-    <a href="/create">Add an item</a>
+    
 </body>
 </html>
