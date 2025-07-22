@@ -1,0 +1,9 @@
+<div class="navbar">
+    <a class="navbtn" href="/">Home</a>
+    <a class="navbtn" href="/create-user">Register</a>
+    <% if(currentUser) { %>
+        <a class="navbtn" href="/log-out">Log Out</a>
+    <% } else { %>
+        <a class="navbtn" href="/log-in">Log In</a>
+    <% } %>
+</div>

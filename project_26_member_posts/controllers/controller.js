@@ -65,6 +65,14 @@ async function userLogInPost(req, res, next) {
     })(req, res, next);
 } 
 
+function userLogOutGet(req, res, next) {
+    req.logout( (error) => {
+        if (error) {
+            return next(error);
+        }
+        res.redirect('/');
+    })
+};
 
 async function verifyUser(email, password, done) {
     try {
@@ -111,5 +119,6 @@ module.exports = {
     userSignUpGet,
     userSignUpPost,
     userLogInGet,
-    userLogInPost
+    userLogInPost,
+    userLogOutGet
 }

@@ -1,0 +1,15 @@
+.navbar {
+    background-color: lightblue;
+    height: 30px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar :first-child {
+    flex-grow: 2;
+}
