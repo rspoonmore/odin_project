@@ -1,0 +1,25 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <% if (locals.currentUser) {%>
+        <h3>Current User: <%=currentUser.firstname %> <%= currentUser.lastname %></h3>
+    <% } %>
+    <a href="create-user">Register</a>
+    <a href="log-in">Log In</a>
+    <% if (locals.posts) {%>
+        <%posts.forEach(post => {%>
+            <div>
+                <%= post.postid %>
+                <%= post.firstname %>
+                <%= post.lastname %>
+            </div>
+        <%})%>
+    <% }%>
+    
+</body>
+</html>
