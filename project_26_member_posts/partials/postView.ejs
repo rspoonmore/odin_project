@@ -1,0 +1,11 @@
+<div class="post-view">
+    <h4><%= postData.title %></h4>
+    <% if(currentUser) { %>
+        <% if(currentUser.membership) { %>
+            <div class="post-author">Author: <%= postData.lastname %>, <%= postData.firstname %></div>
+        <% } %>
+    <% } %>
+    <div class="post-content">
+        <%= postData.text %>
+    </div>
+</div>

@@ -113,6 +113,15 @@ passport.deserializeUser(async (email, done) => {
     }
 });
 
+async function userMembershipPost(req, res) {
+    const {password} = req.body;
+    const {userid} = req.params;
+    if (password == process.env.secretcode) {
+        db.userJoin(Number(userid));
+    }
+    res.redirect("/");
+}
+
 
 module.exports = {
     postsAllGet,
@@ -120,5 +129,6 @@ module.exports = {
     userSignUpPost,
     userLogInGet,
     userLogInPost,
-    userLogOutGet
+    userLogOutGet,
+    userMembershipPost
 }

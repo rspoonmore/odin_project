@@ -11,6 +11,7 @@ mainRouter.post('/create-user', controller.userSignUpPost);
 mainRouter.get('/log-in', controller.userLogInGet);
 mainRouter.post('/log-in', controller.userLogInPost);
 mainRouter.get('/log-out', controller.userLogOutGet);
+mainRouter.post('/:userid/join', controller.userMembershipPost);
 
 /*
 mainRouter.get('/:userid/update')

@@ -9,15 +9,19 @@
     <%- include("../partials/navbar.ejs") %>
     <% if (locals.currentUser) {%>
         <h3>Current User: <%=currentUser.firstname %> <%= currentUser.lastname %></h3>
+        <% if(!currentUser.membership) { %>
+            <div>Enter the password to join the club!</div>
+            <form action="/<%= currentUser.userid %>/join" method="POST">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required/>
+                <button type="submit">Join</button>
+            </form>
+        <% } %>
     <% } %>
-    <h2>Posts:</h2>
+    <h3>Posts:</h3>
     <% if (locals.posts) {%>
         <%posts.forEach(post => {%>
-            <div>
-                <%= post.postid %>
-                <%= post.firstname %>
-                <%= post.lastname %>
-            </div>
+            <%- include("../partials/postView.ejs", {postData: post}) %>
         <%})%>
     <% }%>
     

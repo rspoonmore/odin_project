@@ -75,6 +75,14 @@ async function userUpdate({userid, email, firstName, lastName, membership=false,
     ;`, [userid, email, firstName, lastName, membership, admin, password])
 }
 
+async function userJoin(userid) {
+    await pool.query (`
+        UPDATE users
+        Set membership = TRUE
+        where userid = $1
+    ;`, [userid])
+}
+
 async function userLogin(email) {
     const { rows } = await pool.query('SELECT * FROM users WHERE email = $1;', [email]);
     return rows[0];
@@ -90,6 +98,7 @@ module.exports = {
   userCreate,
   userRead,
   userUpdate,
-  userLogin
+  userLogin,
+  userJoin
 }
 
