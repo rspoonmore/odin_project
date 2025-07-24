@@ -1,9 +1,18 @@
+body {
+    margin: 0;
+}
+
+.main-container {
+    margin: 8px;
+}
+
 .navbar {
     background-color: lightblue;
     height: 30px;
     padding: 10px;
     font-size: 20px;
     font-weight: bold;
+    margin: 0px;
 
     display: flex;
     align-items: center;
@@ -12,4 +21,44 @@
 
 .navbar :first-child {
     flex-grow: 2;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    align-items: flex-start;
+    
+    /* border: 1px solid lightblue; */
+}
+
+input:read-only {
+    /* background-color: lightgray; */
+    border: none;
+}
+
+.post-title {
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.post-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 10px;
+    align-items: flex-start;
+}
+
+.post-view {
+    margin: 5px;
+    border-top: 1px dashed lightblue;
+    border-bottom: 1px dashed lightblue;
+}
+
+.delete-form {
+    font-size: 9px;
+    margin: 0px;
+    padding: 0px;
 }

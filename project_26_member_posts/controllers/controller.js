@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const {decryptUserID} = require('../public/scripts/scripts')
 
 
 
@@ -39,10 +40,13 @@ async function userSignUpPostFunc(req, res, next) {
             });
         }
         const { email, firstName, lastName, password } = req.body;
+        const admin = 'admin' in req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        await db.userCreate({email, firstName, lastName, membership: false, admin: false, password: hashedPassword})
+        await db.userCreate({email, firstName, lastName, membership: false, admin: admin, password: hashedPassword})
 
-        res.redirect("/");
+        userLogInPost(req, res, next);
+
+        // res.redirect("/");
     } catch(error) {
         console.error(error);
         next(error);
@@ -123,6 +127,57 @@ async function userMembershipPost(req, res) {
 }
 
 
+async function createPostGet(req, res) {
+    res.render('create-post', {title: 'Create a New Post'});
+}
+
+const validatePost = [
+    body('title').trim()
+        .isLength({ min: 1, max: 255 }).withMessage('Title must be between 1 and 255 characters.'),
+    body('text').trim()
+        .isLength({ min: 1 }).withMessage('Please put something in the post itself.')
+];
+
+async function createPostPostFunc(req, res, next) {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("create-post", {
+            title: "Create a New Post",
+            errors: errors.array(),
+            });
+        }
+        const { userid, title, text } = req.body;
+        const createDate = new Date();
+        await db.postCreate({userid, title, text, createDate})
+        
+        res.redirect("/");
+    } catch(error) {
+        console.error(error);
+        next(error);
+    }
+}
+
+const createPostPost = [
+    validatePost,
+    createPostPostFunc
+];
+
+async function deletePostPost(req, res) {
+    try {
+        const { postid, encrypteduserid } = req.query;
+        const userid = decryptUserID(encrypteduserid);
+        const user = await db.userRead({userid});
+        if(user.admin) {
+            await db.postDelete({postid})
+        }
+        res.redirect("/");
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 module.exports = {
     postsAllGet,
     userSignUpGet,
@@ -130,5 +185,8 @@ module.exports = {
     userLogInGet,
     userLogInPost,
     userLogOutGet,
-    userMembershipPost
+    userMembershipPost,
+    createPostGet,
+    createPostPost,
+    deletePostPost
 }

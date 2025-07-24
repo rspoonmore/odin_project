@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><% title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <%- include("../partials/navbar.ejs") %>
+    <div class="main-container">
+        <% if(locals.currentUser) { %>
+            <h1><% title %></h1>
+            <%- include("../partials/errors.ejs") %>
+        
+            <form action="/create-post" method="POST" id="create-post-form">
+                <div>
+                    <label for="userid">Posting User ID:</label>
+                    <input id="userid" name="userid" type="text" value="<%= currentUser.userid %>" readonly>
+                </div>
+                <label for="title">Post Title</label>
+                <input id="title" name="title" type="text" required/>
+                <textarea id="text" name="text" placeholder="Enter your post here" rows="10" cols="50" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        <% } else { %>
+            <h1>You must be logged in to create a new post</h1>
+        <% } %>
+    </div>
+
+</body>
+</html>

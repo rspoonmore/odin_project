@@ -19,7 +19,11 @@ Users (by email and password)
 
 async function postsAllRead() {
     const { rows } = await pool.query(`
-        SELECT p.*
+        SELECT p.postid
+            , p.userid
+            , p.title
+            , p.text
+            , TO_CHAR(p.createdate, 'YYYY/MM/DD') as createdate
             , u.firstName
             , u.lastName
         FROM posts as p

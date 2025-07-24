@@ -1,11 +1,17 @@
 <div class="post-view">
-    <h4><%= postData.title %></h4>
+    <div class="post-title"><%= postData.title %></div>
     <% if(currentUser) { %>
+        <% if(currentUser.admin) { %>
+            <form action="/delete?postid=<%= postData.postid %>&encrypteduserid=<%= currentUser.encryptedUserID %>" method="POST" class="delete-form" onclick="return confirm('Are you sure you want to delete this post?');">
+                <button type="submit">Delete</button>
+            </form>
+        <% } %>
         <% if(currentUser.membership) { %>
             <div class="post-author">Author: <%= postData.lastname %>, <%= postData.firstname %></div>
         <% } %>
     <% } %>
     <div class="post-content">
-        <%= postData.text %>
+        <div><strong><%= `Create Date: ${postData.createdate}` %></strong></div>
+        <div><%= postData.text %></div>
     </div>
 </div>

@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config();
 const session = require("express-session");
 const passport = require("passport");
+const {encryptUserID, decryptUserID} = require('./public/scripts/scripts.js');
 
 
 const app = express();
@@ -20,62 +21,16 @@ app.use(passport.session());
 
 // Pass currentUser to each view
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
+    if(req.user) {
+        res.locals.currentUser = {...req.user, 'encryptedUserID': encryptUserID(req.user.userid)};
+    }
+    else {
+        res.locals.currentUser = req.user;
+    }
+    next();
 });
 
-
 app.use("/", mainRouter);
-
-
-// const LocalStrategy = require('passport-local').Strategy;
-// const bcrypt = require('bcryptjs');
-// const db = require('./db/queries');
-
-// app.post(
-//   "/log-in",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/create-user",
-
-//   })
-// );
-
-// async function verify(email, password, done) {
-//     alert(message = `${email}, ${password}`);
-//     try {
-//         const user = await db.userLogin(email);
-//         if (!user) {
-//             // user not found
-//             return done(null, false, { message: "Incorrect username" });
-//         }
-//         const match = await bcrypt.compare(password, user.password);
-//         if (!match) {
-//             // passwords do not match!
-//             return done(null, false, { message: "Incorrect password" })
-//         }
-//         return done(null, user);
-//     } catch(err) {
-//         return done(err);
-//     }
-// }
-
-// passport.use(
-//     new LocalStrategy(verify)
-// );
-
-// passport.serializeUser((user, done) => {
-//     done(null, user.email);
-// });
-
-// passport.deserializeUser(async (email, done) => {
-//     try {
-//         const user = await db.userLogin(email);
-//         done(null, user);
-//     } catch(err) {
-//         done(err);
-//     }
-// });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));

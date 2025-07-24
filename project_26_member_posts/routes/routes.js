@@ -13,17 +13,20 @@ mainRouter.post('/log-in', controller.userLogInPost);
 mainRouter.get('/log-out', controller.userLogOutGet);
 mainRouter.post('/:userid/join', controller.userMembershipPost);
 
+// Post Routes
+mainRouter.get('/create-post', controller.createPostGet);
+mainRouter.post('/create-post', controller.createPostPost);
+mainRouter.post('/delete', controller.deletePostPost);
+
 /*
 mainRouter.get('/:userid/update')
 mainRouter.post('/:userid/update')
 mainRouter.post('/:userid/delete')
 
-// Post Routes
-mainRouter.get('/create-post')
-mainRouter.post('/create-post')
+
 mainRouter.get('/:post-id/update')
 mainRouter.post('/:post-id/update')
-mainRouter.post('/:post-id/delete')
+
 
 */
 
