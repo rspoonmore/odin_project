@@ -38,7 +38,8 @@ VALUES
 async function main({populate = true}) {
   console.log("seeding...");
   const client = new Client({
-    connectionString: `postgresql://${process.env.user}:${process.env.user}@${process.env.host || 'localhost'}:${process.env.sqlport || 5432}/p26`,
+    // connectionString: `postgresql://${process.env.user}:${process.env.user}@${process.env.host || 'localhost'}:${process.env.sqlport || 5432}/p26`,
+    connectionString: process.env.RENDERSTRING
   });
   await client.connect();
   await client.query(setupSQL);
