@@ -80,7 +80,7 @@ function userLogOutGet(req, res, next) {
 
 async function verifyUser(email, password, done) {
     try {
-        const user = await db.userLogin(email);
+        const user = await db.userLogin(email.toLowerCase());
         if (!user) {
             // user not found
             return done(null, false, { message: "Incorrect username" });
@@ -105,12 +105,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-    done(null, user.email);
+    done(null, user.email.toLowerCase());
 });
 
 passport.deserializeUser(async (email, done) => {
     try {
-        const user = await db.userLogin(email);
+        const user = await db.userLogin(email.toLowerCase());
         done(null, user);
     } catch(err) {
         done(err);

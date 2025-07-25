@@ -58,7 +58,7 @@ async function postDelete({postid}) {
 }
 
 async function userCreate({email, firstName, lastName, membership, admin, password}) {
-    await pool.query(`INSERT INTO users (email, firstName, lastName, membership, admin, password) VALUES ($1, $2, $3, $4, $5, $6);`, [email, firstName, lastName, membership, admin, password])
+    await pool.query(`INSERT INTO users (email, firstName, lastName, membership, admin, password) VALUES ($1, $2, $3, $4, $5, $6);`, [email.toLowerCase(), firstName, lastName, membership, admin, password])
 }
 
 async function userRead({userid}) {
@@ -76,7 +76,7 @@ async function userUpdate({userid, email, firstName, lastName, membership=false,
             admin = $6,
             password = $7
         WHERE userid = $1
-    ;`, [userid, email, firstName, lastName, membership, admin, password])
+    ;`, [userid, email.toLowerCase(), firstName, lastName, membership, admin, password])
 }
 
 async function userJoin(userid) {
