@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const strategy = require('../passport/jwtStrategy.js')
+const authenticator = require('../passport/authenticator.js');
 
 passport.use('jwt', strategy);
 
@@ -115,9 +116,55 @@ async function usersLogOutPost(req, res) {
 }
 
 async function usersDelete(req, res) {
-    res.json({
-        message: 'Still need to implement this'
-    })
+    try {
+        const {userid} = req.params;
+        await db.userDelete(userid)
+        return res.json({
+            success: true,
+            message: `User ${userid} deleted`
+        })
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+async function usersGetAll(req, res) {
+    try {
+        let admin = false;
+        const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+        if (cookieSearchJson.success && cookieSearchJson.userid) {
+            const requestingUser = await db.userRead(cookieSearchJson.userid);
+            if(requestingUser && requestingUser.admin) {
+                
+                admin = true;
+            }
+        }
+
+        const users = await db.userAllRead();
+        if(!users) {
+            return res.json({
+                success: false,
+                message: 'Users not found'
+            });
+        };
+        const filteredUsers = users.map(user => {
+            let filteredJSON = {};
+            filteredJSON['userid'] = user.userid;
+            filteredJSON['email'] = user.email;
+            filteredJSON['firstname'] = user.firstname;
+            filteredJSON['lastname'] = user.lastname;
+            filteredJSON['admin'] = user.admin;
+
+            return filteredJSON;
+        })
+        return res.json({
+            success: true,
+            message: 'Users found',
+            users: admin ? users : filteredUsers
+        });
+    } catch(error) {
+        console.log(error)
+    };
 }
 
 module.exports = {
@@ -125,6 +172,7 @@ module.exports = {
     usersPut,
     usersPost,
     usersDelete,
-    usersLogOutPost
+    usersLogOutPost,
+    usersGetAll
 }
 

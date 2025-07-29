@@ -1,5 +1,6 @@
 const db = require('../db/queries');
 const jwt = require('jsonwebtoken');
+const authenticator = require('../passport/authenticator.js');
 // const bcrypt = require('bcryptjs');
 // const passport = require('passport');
 // const strategy = require('../passport/jwtStrategy.js')
@@ -23,35 +24,11 @@ async function postsPut(req, res) {
 async function postsPost(req, res) {
     try {
         const { title, text } = req.body;
-        // Read JWT cookie from header
-        const cookies = req.headers.cookie
-        if(!cookies) {
-            return res.json({
-                success: false,
-                message: 'No cookies were found in the header'
-            })
+        const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+        if (!cookieSearchJson.success || !cookieSearchJson.userid) {
+            return res.json(cookieSearchJson)
         }
-        let token = undefined;
-        if(typeof cookies == 'string') {
-            token = cookies.slice(4)
-        } else if('jwt' in cookies) {
-            token = cookies['jwt']
-        } else {
-            return res.json({
-                success: false,
-                message: 'No JWT cookie was found'
-            })
-        }
-        // const { jwt: token } = req.headers.cookie;
-        const decodedToken = jwt.decode(token);
-        // Get UserID from cookie
-        const { userid } = decodedToken;
-        if(!userid) {
-            return res.json({
-                success: false,
-                message: 'User was not found from the cookie of the request to create post'
-            })
-        }
+        const userid = cookieSearchJson.userid;
         // Post new Blog Post
         db.postCreate({userid, title, text, createDate: new Date()})
         return res.json({

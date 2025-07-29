@@ -94,6 +94,15 @@ async function userLogin(email) {
     return rows[0];
 }
 
+async function userAllRead() {
+    const { rows } = await pool.query('SELECT * FROM users ORDER BY userid;')
+    return rows;
+}
+
+async function userDelete(userid) {
+    await pool.query('DELETE FROM users WHERE userid = $1;', [userid]);
+}
+
 
 module.exports = {
   postsAllRead,
@@ -104,6 +113,8 @@ module.exports = {
   userCreate,
   userRead,
   userUpdate,
-  userLogin
+  userLogin,
+  userDelete,
+  userAllRead
 }
 
