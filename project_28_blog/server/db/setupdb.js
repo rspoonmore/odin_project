@@ -20,6 +20,14 @@ CREATE TABLE posts (
     text VARCHAR ( 100000 ),
     createDate DATE
 );
+
+DROP TABLE IF EXISTS likes;
+CREATE TABLE likes (
+    likeid INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    userid INTEGER,
+    postid INTEGER,
+    createDate DATE
+);
 `;
 
 async function main() {

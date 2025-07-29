@@ -58,24 +58,35 @@ async function postDelete({postid}) {
 }
 
 async function userCreate({email, firstName, lastName, admin, password}) {
-    await pool.query(`INSERT INTO users (email, firstName, lastName, admin, password) VALUES ($1, $2, $3, $4, $5, $6);`, [email.toLowerCase(), firstName, lastName, admin, password])
-}
-
-async function userRead({userid}) {
-    const { rows } = await pool.query('SELECT * FROM users WHERE userid = $1;', [userid]);
+    const checkQueryResults = await pool.query('SELECT * FROM users WHERE email = $1 limit 1;', [email.toLowerCase()])
+    if(checkQueryResults.rows.length > 0) {
+        return undefined
+    }
+    await pool.query(`INSERT INTO users (email, firstName, lastName, admin, password) VALUES ($1, $2, $3, $4, $5);`, [email.toLowerCase(), firstName, lastName, admin, password])
+    const { rows } = await pool.query('SELECT * FROM users WHERE email = $1 limit 1;', [email.toLowerCase()]);
     return rows[0];
 }
 
-async function userUpdate({userid, email, firstName, lastName, admin=false, password}) {
+async function userRead(userid) {
+    const { rows } = await pool.query('SELECT * FROM users WHERE userid = $1 limit 1;', [userid]);
+    return rows.length == 0 ? undefined : rows[0];
+}
+
+async function userUpdate({userid, email, firstName, lastName, admin=false}) {
+    const checkQueryResults = await pool.query('SELECT * FROM users WHERE userid = $1 limit 1;', [userid]);
+    if(checkQueryResults.rows.length == 0) {
+        return undefined
+    }
     await pool.query (`
         UPDATE users
         SET email = $2,
             firstName = $3,
             lastName = $4,
-            admin = $5,
-            password = $6
+            admin = $5
         WHERE userid = $1
-    ;`, [userid, email.toLowerCase(), firstName, lastName, admin, password])
+    ;`, [userid, email.toLowerCase(), firstName, lastName, admin]);
+    const { rows } = await pool.query('SELECT * FROM users WHERE userid = $1 limit 1;', [userid]);
+    return rows[0];
 }
 
 async function userLogin(email) {
