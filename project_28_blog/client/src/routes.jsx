@@ -1,4 +1,4 @@
-import HomePage from './components/HomePage'
+import HomePage from './components/HomePage';
 
 const routes = [
     {
@@ -6,7 +6,11 @@ const routes = [
         element: <HomePage />,
         // errorElement: <ErrorPage />,
         // loader: 
+        children: [
+            
+        ]
     },
+    
 ];
 
 export default routes;

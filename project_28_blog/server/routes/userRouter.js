@@ -4,7 +4,7 @@ const userRouter = Router();
 
 userRouter.get('/', userController.usersGetAll);
 userRouter.post('/', userController.usersPost);
-userRouter.get("/login", userController.usersGet);
+userRouter.post("/login", userController.usersLogin);
 userRouter.post('/logout', userController.usersLogOutPost);
 userRouter.put('/:userid', userController.usersPut);
 userRouter.delete('/:userid', userController.usersDelete);

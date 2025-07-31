@@ -14,7 +14,7 @@ const cookieOptions = {
 	sameSite: 'none',
 }
 
-async function usersGet(req, res) {
+async function usersLogin(req, res) {
     const { email, password } = req.body;
     const user = await db.userLogin(email.toLowerCase());
     if (!user) {
@@ -168,7 +168,7 @@ async function usersGetAll(req, res) {
 }
 
 module.exports = {
-    usersGet,
+    usersLogin,
     usersPut,
     usersPost,
     usersDelete,
