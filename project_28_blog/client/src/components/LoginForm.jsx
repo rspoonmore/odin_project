@@ -22,7 +22,7 @@ class LoginForm extends Component {
         data['email'] = this.state.email;
         data['password'] = this.state.password;
         try {
-            
+            this.setState(prev => ({...prev, outcome: {}}))
             await fetch(`${server}/users/login`, {
                 method: 'POST',
                 headers: {
@@ -81,19 +81,21 @@ class LoginForm extends Component {
     emailPasswordForm() {
         return (
             <form className='form-login' onSubmit={this.login}>
-                <label htmlFor='email'>Email</label>
+                {/* <label htmlFor='email'>Email</label> */}
                 <input 
                     id='email' 
                     name='email' 
                     type='email' 
+                    placeholder="Email"
                     value={this.state.email}
                     onChange={(e) => {this.updateInput('email', e)}}
                 required/>
-                <label htmlFor='password'>Password</label>
+                {/* <label htmlFor='password'>Password</label> */}
                 <input 
                     id='password' 
                     name='password' 
                     type='password' 
+                    placeholder="Password"
                     value={this.state.password}
                     onChange={(e) => {this.updateInput('password', e)}}
                 required/>
