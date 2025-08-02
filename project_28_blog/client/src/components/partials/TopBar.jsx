@@ -1,24 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from "../../context/AuthContext";
 import '../../styles/partials/TopBar.css';
 import { server } from '../../public_fields'
-import LoginForm from '../LoginForm';
+import LoginForm from './LoginForm';
 
-export default function TopBar({ userid=null, setUser= (user) => console.log(`setUser called for ${JSON.stringify(user)}`)}) {
+const TopBar = () => {
     const [showLogin, setShowLogin] = useState(false);
-    const [currentUserId, setCurrentUserId] = useState(userid);
+    const { currentUser, setCurrentUser} = useContext(AuthContext);
 
     function loginWindow() {
         if(showLogin) {
-            const acceptLogin = (res) => {
-                if (!res) {return};
-                if (!res.userid) {return};
-                setCurrentUserId(res.userid);
-                setShowLogin(false);
-                setUser(res);
-            }
-
-            return <LoginForm setUser={acceptLogin}></LoginForm>
+            return <LoginForm setShowLogin={setShowLogin}></LoginForm>
         }
     }
 
@@ -26,14 +19,13 @@ export default function TopBar({ userid=null, setUser= (user) => console.log(`se
         if(window.confirm('Are you sure you want to log out?')) {
             await fetch(`${server}/users/logout`, {method: 'POST'})
             .then(() => {
-                setCurrentUserId(null);
-                setUser(null);
+                setCurrentUser(null);
             })       
         }
     }
 
     function buttonClick() {
-        if(!currentUserId) {
+        if(!currentUser) {
             setShowLogin(true);
         }
         else {
@@ -47,10 +39,12 @@ export default function TopBar({ userid=null, setUser= (user) => console.log(`se
             <div id='top-bar-button-div'>
                 <button 
                     className={showLogin ? 'hidden' : ''} 
-                    onClick={buttonClick}>{currentUserId ? 'Log Out' : 'Log In'}
+                    onClick={buttonClick}>{currentUser ? 'Log Out' : 'Log In'}
                 </button>
                 {loginWindow()}
             </div>
         </div>
     )
 }
+
+export default TopBar
