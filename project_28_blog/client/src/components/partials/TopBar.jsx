@@ -35,7 +35,10 @@ const TopBar = () => {
 
     return (
         <div className='top-bar'>
-            <Link to='/'>Home</Link>
+            <div id='top-bar-link-div'>
+                <Link to='/'>Home</Link>
+                <Link to='/register'>Register</Link>
+            </div>
             <div id='top-bar-button-div'>
                 <button 
                     className={showLogin ? 'hidden' : ''} 

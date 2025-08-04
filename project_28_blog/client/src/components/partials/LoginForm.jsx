@@ -54,7 +54,7 @@ const LoginForm = ({setShowLogin}) => {
         if(!outcome) {return <></>}
         if(!outcome.message) {return <></>}
         return (
-            <div className = {outcome.success ? 'outcome-banner-success' : 'outcome-banner-fail'}>
+            <div className = {outcome.success ? 'outcome-banner outcome-banner-success' : 'outcome-banner outcome-banner-fail'}>
                 {outcome.message}
             </div>
         )

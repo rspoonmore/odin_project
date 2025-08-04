@@ -43,7 +43,7 @@ async function usersPut(req, res) {
     try {
         const params = req.params;
         const userid = Number(params.userid);
-        const { email, firstName, lastName, password, adminCode } = req.body;
+        const { email, firstName, lastName, adminCode } = req.body;
         const admin = adminCode === process.env.ADMIN_CODE;
 
         const existingUser = await db.userRead(userid);
@@ -55,14 +55,24 @@ async function usersPut(req, res) {
                 userid: userid
             });
         };
-        // Does password match
-        const match = await bcrypt.compare(password, existingUser.password);
-        if(!match) {
+        // Is the requesting user the same or an admin
+        let reqAllowed = false;
+        const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+        if (cookieSearchJson.success && cookieSearchJson.userid) {
+            const requestingUser = await db.userRead(cookieSearchJson.userid);
+            if(requestingUser && requestingUser.userid == existingUser.userid) {
+                reqAllowed = true;
+            }
+            else if(requestingUser && requestingUser.admin) {
+                reqAllowed = true;
+            }
+        }
+        if(!reqAllowed) {
             return res.json({
                 success: false,
-                message: 'The password does not match'
-            });
-        };
+                message: 'The user requesting the update is not an admin and does not match the user being updated.'
+            })
+        }
         // Update user
         const user = await db.userUpdate({userid, email, firstName, lastName, admin})
         if(!user) {
@@ -116,8 +126,26 @@ async function usersLogOutPost(req, res) {
 }
 
 async function usersDelete(req, res) {
+    const {userid} = req.params;
+    // Is the requesting user the same or an admin
+    let reqAllowed = false;
+    const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+    if (cookieSearchJson.success && cookieSearchJson.userid) {
+        const requestingUser = await db.userRead(cookieSearchJson.userid);
+        if(requestingUser && requestingUser.userid == userid) {
+            reqAllowed = true;
+        }
+        else if(requestingUser && requestingUser.admin) {
+            reqAllowed = true;
+        }
+    }
+    if(!reqAllowed) {
+        return res.json({
+            success: false,
+            message: 'The user requesting the delete is not an admin and does not match the user being deleted.'
+        })
+    }
     try {
-        const {userid} = req.params;
         await db.userDelete(userid)
         return res.json({
             success: true,

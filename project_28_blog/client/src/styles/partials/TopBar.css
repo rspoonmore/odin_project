@@ -12,9 +12,21 @@
     padding: 5px 15px;
 }
 
-.top-bar > a {
+.top-bar a {
     color: white;
-    text-decoration: none;
+    text-decoration: underline;
+}
+
+.outcome-banner {
+    font-size: 12px;
+}
+
+#top-bar-link-div {
+    display: flex;
+    gap: 5px;
+    margin: 0px;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #top-bar-button-div > button {
