@@ -23,6 +23,7 @@ const RegistrationForm = (setOutcome = null) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(formData)
             })
                 .then(res => res.json())
@@ -58,7 +59,7 @@ const RegistrationForm = (setOutcome = null) => {
                     id='firstName' 
                     name='firstName' 
                     type='text' 
-                    value={registrationData['fistName']}
+                    value={registrationData['firstName']}
                     onChange={(e) => {setRegistrationData(prev => ({...prev, firstName: e.target.value}))}}
                 />
 

@@ -6,6 +6,7 @@ userRouter.get('/', userController.usersGetAll);
 userRouter.post('/', userController.usersPost);
 userRouter.post("/login", userController.usersLogin);
 userRouter.post('/logout', userController.usersLogOutPost);
+userRouter.get('/:userid', userController.usersGet);
 userRouter.put('/:userid', userController.usersPut);
 userRouter.delete('/:userid', userController.usersDelete);
 

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import '../styles/RegisterOrUpdate.css';
 import TopBar from "./partials/TopBar";
 import RegistrationForm from "./partials/RegisterForm";
+import EditUserForm from "./partials/EditUserForm";
 
 const RegisterOrUpdate = ({type='register'}) => {
     const [outcome, setOutcome] = useState(null);
-    const params = useParams();
     
     function outcomeBanner() {
         if (outcome) {
@@ -29,6 +28,8 @@ const RegisterOrUpdate = ({type='register'}) => {
     function form() {
         if(type === 'register') {
             return <RegistrationForm setOutcome={setOutcome}></RegistrationForm>
+        } else {
+            return <EditUserForm setOutcome={setOutcome}></EditUserForm>
         }
     }
         

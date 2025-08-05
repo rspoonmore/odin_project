@@ -5,12 +5,24 @@ import { server } from '../public_fields'
 import TopBar from "./partials/TopBar";
 import { Link } from "react-router-dom";
 
+function checkForJWT() {
+    const cookies = document.cookie.split(';');
+    for(let i = 0;i < cookies.length; i++) {
+        if(cookies[i].split('=')[0].trim() === 'jwt') {return true};
+        if(cookies[i].split(':')[0].trim() === 'jwt') {return true};
+    }
+    return false;
+}
+
 const HomePage = () => {
     const [users, setUsers] = useState(null);
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        console.log('Loading Users')
+        if(!currentUser && checkForJWT()){
+            document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+
         fetch(`${server}/users`)
             .then(res => res.json())
             .then(json => {
@@ -24,7 +36,7 @@ const HomePage = () => {
     function editButton(userid) {
         if(!currentUser) {return null}
         if(!currentUser.admin && currentUser.userid !== userid) {return null}
-        return <Link to={`/users/:${userid}/update`}>Update</Link>
+        return <Link to={`/users/${userid}/update`}>Update</Link>
     } 
 
     function generateUsers() {

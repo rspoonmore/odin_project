@@ -17,7 +17,7 @@ const TopBar = () => {
 
     async function logout() {
         if(window.confirm('Are you sure you want to log out?')) {
-            await fetch(`${server}/users/logout`, {method: 'POST'})
+            await fetch(`${server}/users/logout`, {method: 'POST', credentials: 'include'})
             .then(() => {
                 setCurrentUser(null);
             })       

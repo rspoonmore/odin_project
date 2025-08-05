@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import '../../styles/partials/LoginForm.css';
-import { server } from '../../public_fields'
+import { server } from '../../public_fields';
 
 
 const LoginForm = ({setShowLogin}) => {
@@ -21,6 +21,7 @@ const LoginForm = ({setShowLogin}) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())

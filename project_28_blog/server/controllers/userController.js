@@ -9,9 +9,10 @@ passport.use('jwt', strategy);
 
 const cookieOptions = {
 	maxAge: 1000 * 60 * 60 * 24 * 30,
-	// httpOnly: true,
-	secure: true,
-	sameSite: 'none',
+	httpOnly: false,
+	secure: false,
+	// sameSite: 'none',
+    // 'Access-Control-Allow-Credentials': true
 }
 
 async function usersLogin(req, res) {
@@ -37,6 +38,13 @@ async function usersLogin(req, res) {
         message: 'User logged in!',
         user: user
     })
+    // res.set("Set-Cookie", `jwt=${jwtToken}`)
+    // res.set("Access-Control-Allow-Credentials", "true")
+    // return res.json({
+    //     success: true,
+    //     message: 'User logged in!',
+    //     user: user
+    // })
 }
 
 async function usersPut(req, res) {
@@ -195,12 +203,64 @@ async function usersGetAll(req, res) {
     };
 }
 
+async function usersGet(req, res) {
+    try {
+        const params = req.params;
+        const userid = Number(params.userid);
+        const existingUser = await db.userRead(userid);
+        // Does user exist
+        if(!existingUser) {
+            return res.json({
+                success: false,
+                message: 'User does not exist',
+                userid: userid
+            });
+        };
+        // Is the requesting user the same or an admin
+        let reqAllowed = false;
+        const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+        if (cookieSearchJson.success && cookieSearchJson.userid) {
+            const requestingUser = await db.userRead(cookieSearchJson.userid);
+            if(requestingUser && requestingUser.userid == existingUser.userid) {
+                reqAllowed = true;
+            }
+            else if(requestingUser && requestingUser.admin) {
+                reqAllowed = true;
+            }
+        }
+        if(!reqAllowed) {
+            return res.json({
+                success: false,
+                message: 'The requesting user is not an admin and does not match the user being requested.'
+            })
+        }
+        // Return user
+        const user = await db.userRead(userid)
+        if(!user) {
+            res.json({
+                success: false,
+                message: 'User does not exist',
+                userid: userid
+            })
+        } else {
+            res.json({
+                success: true,
+                message: 'User found!',
+                user: user
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     usersLogin,
     usersPut,
     usersPost,
     usersDelete,
     usersLogOutPost,
-    usersGetAll
+    usersGetAll,
+    usersGet
 }
 

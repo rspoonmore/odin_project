@@ -6,7 +6,6 @@ const routes = [
         path: "/",
         element: <HomePage />,
         // errorElement: <ErrorPage />,
-        // loader: 
         children: [
             
         ]
