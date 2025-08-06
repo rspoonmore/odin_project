@@ -110,7 +110,7 @@ async function usersPost(req, res) {
         if(!user) {
             res.json({
                 success: false,
-                message: 'User already exists!',
+                message: `An account for ${email} already exists.`,
                 email: email
             })
         } else {

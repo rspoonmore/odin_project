@@ -3,26 +3,15 @@ import { AuthContext } from "../context/AuthContext";
 import '../styles/HomePage.css';
 import { server } from '../public_fields'
 import TopBar from "./partials/TopBar";
-import { Link } from "react-router-dom";
-
-function checkForJWT() {
-    const cookies = document.cookie.split(';');
-    for(let i = 0;i < cookies.length; i++) {
-        if(cookies[i].split('=')[0].trim() === 'jwt') {return true};
-        if(cookies[i].split(':')[0].trim() === 'jwt') {return true};
-    }
-    return false;
-}
+import UserView from "./partials/UserView";
+import { clearCookiesIfNoCurrentUser } from "../cookies/CookieHandler";
 
 const HomePage = () => {
     const [users, setUsers] = useState(null);
+    const [showUsers, setShowUsers] = useState(true);
     const { currentUser } = useContext(AuthContext);
 
-    useEffect(() => {
-        if(!currentUser && checkForJWT()){
-            document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        }
-
+    const loadUsers = () => {
         fetch(`${server}/users`)
             .then(res => res.json())
             .then(json => {
@@ -31,42 +20,37 @@ const HomePage = () => {
                 }
                 })
             .catch(err => console.log(err))
-    }, []) 
-
-    function editButton(userid) {
-        if(!currentUser) {return null}
-        if(!currentUser.admin && currentUser.userid !== userid) {return null}
-        return <Link to={`/users/${userid}/update`}>Update</Link>
-    } 
-
-    function generateUsers() {
-        if(!users) {
-            return (
-                <div>Loading...</div>
-            )
-        }
-        return (
-            <div>
-                <h3>Users:</h3>
-                <ul>
-                    {users.map(user => {
-                        return (
-                            <li key={user.userid}>
-                                {user.email} {editButton(user.userid)}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-        )
     }
 
+    const loadScreen = () => {
+        clearCookiesIfNoCurrentUser(currentUser)
+        loadUsers()
+    }
+
+    useEffect(loadScreen, [currentUser]) 
+
+    const showUsersButton = () => {
+        const onClick = () => {
+            setShowUsers(prev => {return !prev})
+        }
+
+        return <button className='btn' onClick={onClick}>{showUsers ? 'Hide' : 'Show'} Users</button>
+    }
+
+    const dynamicUserView = () => {
+        if(!showUsers) return <></>
+        return <UserView currentUser={currentUser} users={users} onDelete={loadUsers}></UserView>
+    }
 
     return (
         <>
             <TopBar></TopBar>
             <h1>Welcome to the Home Page{currentUser ? ` ${currentUser.firstname}!` : ''}</h1>
-            {generateUsers()}
+            <div className='home-view-buttons'>
+                {showUsersButton()}
+            </div>
+            {dynamicUserView()}
+            {/* {UserView({currentUser, users, onDelete: loadUsers})} */}
         </>
     )
 

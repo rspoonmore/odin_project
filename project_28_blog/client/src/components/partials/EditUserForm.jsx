@@ -21,6 +21,7 @@ const EditUserForm = (setOutcome = null) => {
     }
 
     useEffect(() => {
+        console.log(`Getting userid ${userid} data`)
         try {
             fetch(`${server}/users/${userid}`, {
                 method: 'GET',
@@ -33,6 +34,7 @@ const EditUserForm = (setOutcome = null) => {
                 .then(res => {
                     if(res.success && res.user) {
                         loadUserToForm(res.user)
+                        if(setOutcome) {setOutcome.setOutcome(null)}
                     } else if (setOutcome) {
                         setOutcome.setOutcome(res)
                     }
@@ -40,7 +42,7 @@ const EditUserForm = (setOutcome = null) => {
         } catch (error) {
             console.log(error)
         }
-    }, [currentUser])
+    }, [currentUser, setOutcome, userid])
 
     async function updateUser(e) {
         e.preventDefault();

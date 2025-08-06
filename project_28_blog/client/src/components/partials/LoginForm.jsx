@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import '../../styles/partials/LoginForm.css';
 import { server } from '../../public_fields';
+import OutcomeBanner from './OutcomeBanner';
 
 
 const LoginForm = ({setShowLogin}) => {
@@ -51,16 +52,6 @@ const LoginForm = ({setShowLogin}) => {
         }
     }
 
-    function outcomeBanner() {
-        if(!outcome) {return <></>}
-        if(!outcome.message) {return <></>}
-        return (
-            <div className = {outcome.success ? 'outcome-banner outcome-banner-success' : 'outcome-banner outcome-banner-fail'}>
-                {outcome.message}
-            </div>
-        )
-    }
-
     function emailPasswordForm() {
         return (
             <form className='form-login' onSubmit={login}>
@@ -89,7 +80,7 @@ const LoginForm = ({setShowLogin}) => {
 
     return (
         <div>
-            {outcomeBanner()}
+            <OutcomeBanner outcome={outcome}></OutcomeBanner>
             {emailPasswordForm()}
         </div>
     )

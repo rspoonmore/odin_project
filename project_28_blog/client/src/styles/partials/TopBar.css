@@ -17,10 +17,6 @@
     text-decoration: underline;
 }
 
-.outcome-banner {
-    font-size: 12px;
-}
-
 #top-bar-link-div {
     display: flex;
     gap: 5px;

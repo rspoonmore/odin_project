@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+// import { useContext, useState } from "react";
+// import { AuthContext } from "../../context/AuthContext";
+import { useState } from 'react';
 import { server } from '../../public_fields'
 
 const RegistrationForm = (setOutcome = null) => {
@@ -7,17 +8,15 @@ const RegistrationForm = (setOutcome = null) => {
     const [registrationData, setRegistrationData] = useState(blankRegData);
     const [showForm, setShowForm] = useState(true);
 
-    const { setCurrentUser } = useContext(AuthContext);
+    // const { setCurrentUser } = useContext(AuthContext);
 
     async function register(e) {
         e.preventDefault();
         try {
             const formData = new FormData();
             for(const key in registrationData) {
-                console.log(key, registrationData[key])
                 formData[key] = registrationData[key];
             }
-            console.log(formData)
             await fetch(`${server}/users/`, {
                 method: 'POST',
                 headers: {
@@ -30,10 +29,11 @@ const RegistrationForm = (setOutcome = null) => {
                 .then(res => {
                     if(res.success) {
                         setRegistrationData(blankRegData);
-                        setCurrentUser(res.user);
+                        // setCurrentUser(res.user);
                         setShowForm(false);
+                        if (setOutcome) {setOutcome.setOutcome(null)}
                     }
-                    if (setOutcome) {setOutcome(res)}
+                    if (setOutcome) {setOutcome.setOutcome(res)}
                 })
         } catch(error) {
             console.log(error)

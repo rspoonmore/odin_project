@@ -1,22 +1,21 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
 import '../styles/RegisterOrUpdate.css';
 import TopBar from "./partials/TopBar";
 import RegistrationForm from "./partials/RegisterForm";
 import EditUserForm from "./partials/EditUserForm";
+import OutcomeBanner from "./partials/OutcomeBanner";
+import { clearCookiesIfNoCurrentUser } from "../cookies/CookieHandler";
 
 const RegisterOrUpdate = ({type='register'}) => {
     const [outcome, setOutcome] = useState(null);
-    
-    function outcomeBanner() {
-        if (outcome) {
-            return (
-                <div className = {outcome.success ? 'outcome-banner-success' : 'outcome-banner-fail'}>
-                    {outcome.message}
-                </div>
-            )
-        }
-        return <></>
+    const { currentUser } = useContext(AuthContext);
+
+    const loadPage = () => {
+        clearCookiesIfNoCurrentUser(currentUser)
     }
+
+    useEffect(loadPage, [currentUser])
 
     function header() {
         if(type === 'register') {
@@ -38,7 +37,7 @@ const RegisterOrUpdate = ({type='register'}) => {
         <div>
             <TopBar></TopBar>
             <h1>{header()}</h1>
-            {outcomeBanner()}
+            <OutcomeBanner outcome={outcome}></OutcomeBanner>
             {form()}
         </div>
     )
