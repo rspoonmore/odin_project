@@ -17,22 +17,37 @@ const cookieOptions = {
 
 async function usersLogin(req, res) {
     const { email, password } = req.body;
-    const user = await db.userLogin(email.toLowerCase());
-    if (!user) {
+    let user = null;
+    // If email and password provided
+    if(email) {
+        user = await db.userLogin(email.toLowerCase());
+        if (!user) {
+            return res.json({
+                success: false,
+                message: `An account with email: "${email.toLowerCase()}" does not exist. Please register your account.`
+            })
+        }
+        const match = await bcrypt.compare(password, user.password);
+        if(!match) {
+            return res.json({
+                success: false,
+                message: 'The password does not match'
+            });
+        }
+        const jwtToken = jwt.sign({ userid: user.userid}, process.env.PASSPORT_SESSION_SECRET);
+        res.cookie('jwt', jwtToken, cookieOptions)
+    } else {
+        const cookieSearchJson = authenticator.getUserIDFromCookie(req);
+        if (cookieSearchJson.success && cookieSearchJson.userid) {
+            user = await db.userRead(cookieSearchJson.userid);
+        }
+    }
+    if(!user) {
         return res.json({
             success: false,
-            message: `An account with email: "${email.toLowerCase()}" does not exist. Please register your account.`
+            message: 'User not found'
         })
     }
-    const match = await bcrypt.compare(password, user.password);
-    if(!match) {
-        return res.json({
-            success: false,
-            message: 'The password does not match'
-        });
-    }
-    const jwtToken = jwt.sign({ userid: user.userid}, process.env.PASSPORT_SESSION_SECRET);
-    res.cookie('jwt', jwtToken, cookieOptions)
     return res.json({
         success: true,
         message: 'User logged in!',
@@ -154,7 +169,8 @@ async function usersDelete(req, res) {
         })
     }
     try {
-        await db.userDelete(userid)
+        await db.userDelete(userid);
+        await db.postByUserDelete({userid});
         return res.json({
             success: true,
             message: `User ${userid} deleted`

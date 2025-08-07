@@ -26,9 +26,14 @@ async function postsAllRead() {
             , TO_CHAR(p.createdate, 'YYYY/MM/DD') as createdate
             , u.firstName
             , u.lastName
+            , u.email
+            , count(distinct l.likeid) as likes
         FROM posts as p
         join users as u
             on p.userid = u.userid
+        LEFT JOIN likes as l
+            on p.postid = l.postid
+        GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
         order by createDate desc
     ;`);
     return rows;
@@ -39,7 +44,18 @@ async function postCreate({userid, title, text, createDate}) {
 }
 
 async function postRead({postid}) {
-    const { rows } = await pool.query("SELECT * FROM posts where postid = $1;", [postid]);
+    const { rows } = await pool.query(`
+        SELECT p.postid
+            , p.userid
+            , p.title
+            , p.text
+            , TO_CHAR(p.createdate, 'YYYY/MM/DD') as createdate
+            , count(distinct l.likeid) as likes
+        FROM posts as p
+        LEFT JOIN likes as l
+            on p.postid = l.postid
+        where postid = $1;
+        GROUP BY 1, 2, 3, 4, 5`, [postid]);
     return rows[0];
 }
 
@@ -55,6 +71,10 @@ async function postUpdate({postid, userid, title, text, createDate}) {
 
 async function postDelete({postid}) {
     await pool.query(`DELETE FROM posts where postid = $1;`, [postid]);
+}
+
+async function postByUserDelete({userid}) {
+    await pool.query('DELETE FROM posts where userid = $1;', [userid]);
 }
 
 async function userCreate({email, firstName, lastName, admin, password}) {
@@ -110,6 +130,7 @@ module.exports = {
   postRead,
   postUpdate,
   postDelete,
+  postByUserDelete,
   userCreate,
   userRead,
   userUpdate,
