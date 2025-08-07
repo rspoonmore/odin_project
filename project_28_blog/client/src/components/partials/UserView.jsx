@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { server } from "../../public_fields";
+import '../../styles/partials/UserView.css';
 
 const UserView = ({currentUser, users, onDelete}) => {
     function editButton(userid) {

@@ -1,21 +1,4 @@
-.user-view {
-    display: flex;
-    margin: 5px 15px;
-    padding: 10px;
-    gap: 5px;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 250px;
-    border: 1px dashed green;
-}
-
-.user-view-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.user-view-buttons .btn {
+.btn {
     text-decoration: none;
     color: white;
     border: 1px solid black;
@@ -30,7 +13,19 @@
     text-align: center;
 }
 
-.user-view-buttons a.btn {
+a.btn {
     line-height: 18px;
     width: 41px;
+}
+
+.large-btn {
+    height: 30px;
+    width: 100px;
+    font-size: 15px;
+}
+
+.home-view-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
 }

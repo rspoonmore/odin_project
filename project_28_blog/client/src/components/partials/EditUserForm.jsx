@@ -42,7 +42,7 @@ const EditUserForm = (setOutcome = null) => {
         } catch (error) {
             console.log(error)
         }
-    }, [currentUser, setOutcome, userid])
+    }, [])
 
     async function updateUser(e) {
         e.preventDefault();

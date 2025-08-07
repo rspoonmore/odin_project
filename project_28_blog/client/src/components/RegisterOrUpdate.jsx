@@ -5,14 +5,14 @@ import TopBar from "./partials/TopBar";
 import RegistrationForm from "./partials/RegisterForm";
 import EditUserForm from "./partials/EditUserForm";
 import OutcomeBanner from "./partials/OutcomeBanner";
-import { clearCookiesIfNoCurrentUser } from "../cookies/CookieHandler";
+import { setCurrentUserIfCookie } from "../cookies/CookieHandler";
 
 const RegisterOrUpdate = ({type='register'}) => {
     const [outcome, setOutcome] = useState(null);
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const loadPage = () => {
-        clearCookiesIfNoCurrentUser(currentUser)
+        setCurrentUserIfCookie(setCurrentUser)
     }
 
     useEffect(loadPage, [currentUser])

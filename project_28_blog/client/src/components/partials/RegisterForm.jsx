@@ -1,5 +1,3 @@
-// import { useContext, useState } from "react";
-// import { AuthContext } from "../../context/AuthContext";
 import { useState } from 'react';
 import { server } from '../../public_fields'
 
@@ -7,8 +5,6 @@ const RegistrationForm = (setOutcome = null) => {
     const blankRegData = {'email': '', 'firstName': '', 'lastName': '', 'password': '', 'adminCode': ''};
     const [registrationData, setRegistrationData] = useState(blankRegData);
     const [showForm, setShowForm] = useState(true);
-
-    // const { setCurrentUser } = useContext(AuthContext);
 
     async function register(e) {
         e.preventDefault();
@@ -29,7 +25,6 @@ const RegistrationForm = (setOutcome = null) => {
                 .then(res => {
                     if(res.success) {
                         setRegistrationData(blankRegData);
-                        // setCurrentUser(res.user);
                         setShowForm(false);
                         if (setOutcome) {setOutcome.setOutcome(null)}
                     }
