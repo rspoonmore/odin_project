@@ -33,11 +33,17 @@ const TopBar = () => {
         }
     }
 
+    const newPostLink = () => {
+        if(!currentUser) {return <></>}
+        return <Link to='/posts/new'>New Post</Link>
+    }
+
     return (
         <div className='top-bar'>
             <div id='top-bar-link-div'>
                 <Link to='/'>Home</Link>
                 <Link to='/register'>Register</Link>
+                {newPostLink()}
             </div>
             <div id='top-bar-button-div'>
                 <button 

@@ -14,6 +14,7 @@ Users (by ID)
     - Update (Post)
 Users (by email)
     - Read (Get)
+Likes (by postid)
 
 */
 
@@ -27,7 +28,7 @@ async function postsAllRead() {
             , u.firstName
             , u.lastName
             , u.email
-            , count(distinct l.likeid) as likes
+            , count(distinct l.userid) as likes
         FROM posts as p
         join users as u
             on p.userid = u.userid
@@ -50,12 +51,15 @@ async function postRead({postid}) {
             , p.title
             , p.text
             , TO_CHAR(p.createdate, 'YYYY/MM/DD') as createdate
-            , count(distinct l.likeid) as likes
+            , u.email
+            , CAST(count(distinct l.userid) AS INT) as likes
         FROM posts as p
+        LEFT JOIN users as u
+            on p.userid = u.userid
         LEFT JOIN likes as l
             on p.postid = l.postid
-        where postid = $1;
-        GROUP BY 1, 2, 3, 4, 5`, [postid]);
+        where p.postid = $1
+        GROUP BY 1, 2, 3, 4, 5, 6;`, [postid]);
     return rows[0];
 }
 
@@ -71,10 +75,7 @@ async function postUpdate({postid, userid, title, text, createDate}) {
 
 async function postDelete({postid}) {
     await pool.query(`DELETE FROM posts where postid = $1;`, [postid]);
-}
-
-async function postByUserDelete({userid}) {
-    await pool.query('DELETE FROM posts where userid = $1;', [userid]);
+    await pool.query(`DELETE FROM likes where postid = $1;`, [postid]);
 }
 
 async function userCreate({email, firstName, lastName, admin, password}) {
@@ -121,6 +122,27 @@ async function userAllRead() {
 
 async function userDelete(userid) {
     await pool.query('DELETE FROM users WHERE userid = $1;', [userid]);
+    await pool.query('DELETE FROM posts WHERE userid = $1;', [userid]);
+    await pool.query('DELETE FROM likes WHERE userid = $1;', [userid]);
+}
+
+async function likedByUser({postid, userid}) {
+    const {rows} = await pool.query(`
+        SELECT MAX(case when userid = $2 then 1 else 0 end) = 1 as likedbyuser
+        FROM likes
+        WHERE postid = $1 
+    ;`, [Number(postid), Number(userid)])
+    if (!rows) {return false}
+    if (rows.length == 0) {return false}
+    return rows[0].likedbyuser;
+}
+
+async function likePost({postid, userid, createDate = new Date()}) {
+    await pool.query(`INSERT INTO likes (userid, postid, createDate) VALUES ($1, $2, $3);`, [userid, postid, createDate]);
+}
+
+async function unlikePost({postid, userid}) {
+    await pool.query(`DELETE FROM likes WHERE userid = $1 and postid = $2;`, [userid, postid]);
 }
 
 
@@ -130,7 +152,9 @@ module.exports = {
   postRead,
   postUpdate,
   postDelete,
-  postByUserDelete,
+  likedByUser,
+  likePost,
+  unlikePost,
   userCreate,
   userRead,
   userUpdate,

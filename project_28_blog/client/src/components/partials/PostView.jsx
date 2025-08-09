@@ -10,6 +10,7 @@ const PostView = ({posts}) => {
                     <span className='post-title'>{post.title}</span>
                     <Link className='btn' to={`/posts/${post.postid}`}>View</Link>
                 </div> 
+                <span className='post-details'>{post.email}</span>
                 <span className='post-details'>{post.createdate}</span>
                 <span className='post-details'>{post.likes} like{post.likes === 1 ? '' : 's'}</span>
             </div>

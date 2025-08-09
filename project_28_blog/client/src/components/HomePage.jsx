@@ -10,7 +10,7 @@ import { setCurrentUserIfCookie } from "../cookies/CookieHandler";
 const HomePage = () => {
     const [users, setUsers] = useState(null);
     const [posts, setPosts] = useState(null);
-    const [showUsers, setShowUsers] = useState(true);
+    const [showUsers, setShowUsers] = useState(false);
     const [showPosts, setShowPosts] = useState(true);
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
@@ -19,7 +19,7 @@ const HomePage = () => {
         fetch(`${server}/users`)
             .then(res => res.json())
             .then(json => {
-                if(json.success) {
+                if(json.success && json.users) {
                     setUsers(json.users)
                 }
                 })
@@ -28,25 +28,14 @@ const HomePage = () => {
 
     const loadPosts = () => {
         console.log('Loading Posts')
-        const dummyPostData = [
-            {
-                'postid': 1,
-                'title': 'Hello World',
-                'text': 'This is a dummy post',
-                'createdate': '2025-08-07',
-                'email': 'ryan@test.com',
-                'likes': 1
-            },
-            {
-                'postid': 2,
-                'title': 'Hello Again',
-                'text': 'This is anoter dummy post',
-                'createdate': '2025-08-07',
-                'email': 'ryan@test.com',
-                'likes': 0
-            },
-        ]
-        setPosts(dummyPostData)
+        fetch(`${server}/posts`)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success && json.posts) {
+                    setPosts(json.posts)
+                }
+                })
+            .catch(err => console.log(err))
     }
 
     const loadScreen = () => {
@@ -93,7 +82,6 @@ const HomePage = () => {
             </div>
             {dynamicUserView()}
             {dynamicPostView()}
-            {/* {UserView({currentUser, users, onDelete: loadUsers})} */}
         </>
     )
 

@@ -4,75 +4,119 @@ import { useParams } from "react-router-dom";
 import { server } from '../public_fields'
 import { setCurrentUserIfCookie } from "../cookies/CookieHandler";
 import TopBar from "./partials/TopBar";
+import OutcomeBanner from "./partials/OutcomeBanner";
 import "../styles/PostPage.css"
 
 const PostPage = () => {
     const [post, setPost] = useState(null);
     const [liked, setLiked] = useState(false);
+    const [outcome, setOutcome] = useState(null);
+    const {postid} = useParams();
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const loadPost = () => {
         console.log('Loading Post')
-
-        const dummyPostData = {
-            'postid': 1,
-            'title': 'Hello World',
-            'text': 'This is a dummy post',
-            'createdate': '2025-08-07',
-            'email': 'ryan@test.com',
-            'likes': 3
-        }
-        setPost(dummyPostData)
+        if(!postid) {return console.log('No PostID in params')}
+        fetch(`${server}/posts/${postid}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(json => {
+                if(json.success && json.post) {
+                    setPost(json.post)
+                    if(json.post.likedbyrequestor) {
+                        setLiked(true);
+                    }
+                    else {
+                        setLiked(false);
+                    }
+                }
+                })
+            .catch(err => console.log(err))
     }
 
-    const loadLike = () => {
-        console.log('Loading Like')
+    const deletButton = () => {
+        if (!post || !post.userid) { return <></> }
+        if (!currentUser) { return <></> }
+        if (!currentUser.admin && currentUser.userid !== post.userid) { return <></> }
+        return <button className='btn' onClick={deletePressed}>Delete</button>
+    }
 
-        setLiked(true);
+    const deletePressed = () => {
+        if (window.confirm('Are you sure you want to delete this post?')) {
+            console.log('Deleting Post')
+            fetch(`${server}/posts/${postid}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res && res.message) {
+                    setOutcome(res);
+                    if(res.success) {
+                        setPost(null);
+                        setLiked(false);
+                    }
+                }
+            })
+            .catch(error => {console.log(error)})
+        }
     }
 
     const loadScreen = () => {
         setCurrentUserIfCookie(setCurrentUser);
         loadPost();
-        loadLike();
     }
 
     useEffect(loadScreen, []) 
 
     const likePost = () => {
-        console.log('Like/Unlike Button hit')
-
-        const dummyLikeFunc = () => {
-            // Create or Delete like
-            let likeAmount = 0;
-            if(liked) {
-                likeAmount = -1;
-            }
-            else {
-                likeAmount = 1;
-            }
-
-            // Change post like amount locally
-            setPost(prev => ({
-                ...prev,
-                likes: prev['likes'] + likeAmount
-            }))
-
-            // Change Like state
-            setLiked(prev => {return !prev})
+        let likePostCall = 'unlike';
+        // Create or Delete like
+        let likeAmount = 0;
+        if(liked) {
+            likeAmount = -1;
+        }
+        else {
+            likeAmount = 1;
+            likePostCall = 'like';
         }
 
-        dummyLikeFunc()
+        // Send like or unlike to server
+        fetch(`${server}/posts/${postid}/${likePostCall}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        }).catch(error => {console.log(error)})
+
+        // Change post like amount locally
+        setPost(prev => ({
+            ...prev,
+            likes: prev['likes'] + likeAmount
+        }))
+
+        // Change Like state
+        setLiked(prev => {return !prev})
     }
 
     const postView = () => {
-        if(!post) {return <h3>Loading...</h3>}
+        if(!post) {return <></>}
         return (
             <div id='post-container'>
                 <span id='post-title'>{post.title}</span>
                 <div id='post-details'>
                     <span>Author: {post.email}</span>
                     <span>Create Date: {post.createdate}</span>
+                    {deletButton()}
                 </div>
                 <div id='post-text'>{post.text}</div>
                 <span id='post-likes'>
@@ -86,6 +130,7 @@ const PostPage = () => {
     return (
         <>
             <TopBar></TopBar>
+            <OutcomeBanner outcome={outcome}></OutcomeBanner>
             {postView()}
         </>
     )

@@ -2,7 +2,7 @@
     background-color: green;
     color: white;
     min-height: 25px;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
 
     display: flex;
@@ -19,7 +19,7 @@
 
 #top-bar-link-div {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     margin: 0px;
     align-items: center;
     justify-content: flex-start;

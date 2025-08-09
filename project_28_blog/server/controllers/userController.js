@@ -170,7 +170,6 @@ async function usersDelete(req, res) {
     }
     try {
         await db.userDelete(userid);
-        await db.postByUserDelete({userid});
         return res.json({
             success: true,
             message: `User ${userid} deleted`
@@ -195,8 +194,9 @@ async function usersGetAll(req, res) {
         const users = await db.userAllRead();
         if(!users) {
             return res.json({
-                success: false,
-                message: 'Users not found'
+                success: true,
+                message: 'No users created yet',
+                users: []
             });
         };
         const filteredUsers = users.map(user => {

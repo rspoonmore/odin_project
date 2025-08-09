@@ -1,6 +1,7 @@
 import HomePage from './components/HomePage';
 import RegisterOrUpdate from './components/RegisterOrUpdate';
 import PostPage from './components/PostPage';
+import NewPost from './components/NewPost';
 
 const routes = [
     {
@@ -22,6 +23,10 @@ const routes = [
     {
         path: '/posts/:postid',
         element: <PostPage></PostPage>
+    },
+    {
+        path: '/posts/new',
+        element: <NewPost></NewPost>
     }
     
 ];
