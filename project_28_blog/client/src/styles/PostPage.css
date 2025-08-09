@@ -1,0 +1,40 @@
+#post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 25px 15px;
+    padding: 5px;
+}
+
+#post-title {
+    font-size: 30px;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+#post-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    font-size: 12px;
+}
+
+#post-text {
+    margin: 5px 0px;
+    padding: 5px;
+    min-height: 100px;
+    min-width: 300px;
+    border: 5px double gray;
+}
+
+#post-likes {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+#post-likes > span {
+    font-size: 14px;
+}
